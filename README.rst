@@ -21,7 +21,7 @@ Hull University Graphics Helper (HUGH) Platform
 Introduction
 ============
 
-``hugh-platforms`` is an (experimental) infrastructure project to support the various graphics modules at the `Department of Computer Science`_, `The University of Hull`_.
+``hugh-platforms`` is part of an (experimental) infrastructure project to support the various graphics modules at the `Department of Computer Science`_, `The University of Hull`_.
 
 Building and Installation
 =========================

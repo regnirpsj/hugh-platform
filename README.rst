@@ -2,8 +2,8 @@
 Hull University Graphics Helper (HUGH) Platform
 ===============================================
 
-.. image:: https://travis-ci.org/regnirpsj/hugh-fields.svg?branch=master
-   :target: https://travis-ci.org/regnirpsj/hugh-fields
+.. image:: https://travis-ci.org/regnirpsj/hugh-platform.svg?branch=master
+   :target: https://travis-ci.org/regnirpsj/hugh-platform
 
 :Author: Jan P Springer <regnirpsj@gmail.com>
 
@@ -13,7 +13,9 @@ Hull University Graphics Helper (HUGH) Platform
 .. _CMake:                          http://www.cmake.org/
 .. _Department of Computer Science: http://www2.hull.ac.uk/science/computer_science.aspx
 .. _Doxygen:                        http://www.doxygen.org/
+.. _GLM:                            http://glm.g-truc.net/
 .. _The University of Hull:         http://www.hull.ac.uk/
+.. _hugh-fields:                    http://github.com/regnirpsj/hugh-fields
 .. _hugh-support:                   http://github.com/regnirpsj/hugh-support
 
 Introduction
@@ -69,6 +71,8 @@ Requirements
 Mandatory:
 
 * `Boost`_
+* `GLM`_
+* `hugh-fields`_
 * `hugh-support`_
 
 Optional:

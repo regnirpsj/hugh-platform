@@ -50,7 +50,7 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_platform_xcb_window_base_ctor)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_base_ctor)
 {
   std::unique_ptr<test const> const w(new test);
 
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(test_platform_xcb_window_base_ctor)
   BOOST_TEST_MESSAGE(*w);
 }
 
-BOOST_AUTO_TEST_CASE(test_platform_xcb_window_base_ctor_fail)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_base_ctor_fail)
 {
   char                  d[] = "DISPLAY=dummy:?.?";
   std::unique_ptr<test> w(nullptr);

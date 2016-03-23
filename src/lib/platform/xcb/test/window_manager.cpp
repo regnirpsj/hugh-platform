@@ -40,7 +40,7 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_platform_xcb_window_manager)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_manager)
 {
   namespace hpw  = hugh::platform::window;
   namespace hpxw = hugh::platform::xcb::window;

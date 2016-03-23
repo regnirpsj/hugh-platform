@@ -53,7 +53,7 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_platform_window_ctor)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_window_ctor)
 {
   std::unique_ptr<hugh::platform::window::base> const w(new window);
 

@@ -80,7 +80,7 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_platform_application_command_line_ctor)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_command_line_ctor)
 {
   using hugh::platform::application::command_line;
 
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE(test_platform_application_command_line_ctor)
   BOOST_TEST_MESSAGE(c);
 }
 
-BOOST_AUTO_TEST_CASE(test_platform_application_command_line_process)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_command_line_process)
 {
   using hugh::platform::application::command_line;
 

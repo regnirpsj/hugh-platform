@@ -80,7 +80,7 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_platform_application_execute)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_execute)
 {
   namespace hpa = hugh::platform::application;
   
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE(test_platform_application_execute)
   BOOST_CHECK(EXIT_SUCCESS == execute<appsin>(command_line(argc, argv)));
 }
 
-BOOST_AUTO_TEST_CASE(test_platform_application_execute_nothrow)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_execute_nothrow)
 {
   namespace hpa = hugh::platform::application;
   
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(test_platform_application_execute_nothrow)
   BOOST_CHECK(EXIT_SUCCESS != execute<appsit>(command_line(argc, argv), std::nothrow));
 }
 
-BOOST_AUTO_TEST_CASE(test_platform_application_execute_single_instance_fail)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_execute_single_instance_fail)
 {
   namespace hpa = hugh::platform::application;
   
@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_CASE(test_platform_application_execute_single_instance_fail)
   BOOST_CHECK_THROW(execute<single_inst_fail>(command_line(argc, argv)), std::exception);
 }
 
-BOOST_AUTO_TEST_CASE(test_platform_application_execute_single_instance_fail_nothrow)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_execute_single_instance_fail_nothrow)
 {
   namespace hpa = hugh::platform::application;
   

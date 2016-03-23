@@ -8,23 +8,19 @@
 
 cma_print_current_directory()
 
-find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED)
-find_package(HUGH                           REQUIRED COMPONENTS support)
+find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS unit_test_framework)
 
-include_directories(SYSTEM ${Boost_INCLUDE_DIR})
-include_directories(SYSTEM ${HUGH_INCLUDE_DIRS})
+include_directories(SYSTEM ${Boost_INLCUDE_DIR})
 
 set(SRC)
-list(APPEND SRC "application/base.cpp")
+list(APPEND SRC "window_base.cpp")
+list(APPEND SRC "window_manager.cpp")
+list(APPEND SRC "window_simple.cpp")
 
 set(LIBS)
-list(APPEND LIBS hugh_platform)
-list(APPEND LIBS ${HUGH_LIBRARIES})
+list(APPEND LIBS ${LIB})
+list(APPEND LIBS ${Boost_LIBRARIES})
 
-set(LIB "${LIB}_posix")
+cma_setup_test(${LIB} SOURCES ${SRC} DEPENDENCIES ${LIBS})
 
-cma_setup_library(${LIB} SOURCES ${SRC} DEPENDENCIES ${LIBS}  INCDIR "hugh/platform/posix")
-
-add_subdirectory(test EXCLUDE_FROM_ALL)
-
-add_dependencies(hugh_platform_all ${LIB})
+add_dependencies(test_hugh_platform_all test_${LIB})

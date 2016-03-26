@@ -19,6 +19,7 @@
 // includes, system
 
 #include <glm/gtx/io.hpp> // glm::operator<<  (field::container::print_on)
+#include <stdexcept>      // std::logic_error
 
 // includes, project
 
@@ -62,7 +63,48 @@ namespace hugh {
       {
         TRACE("hugh::platform::window::base::base");
       }
-    
+
+      /* virtual */ void
+      base::do_changed(field::base& f)
+      {
+        TRACE("hugh::platform::window::base::do_changed");
+
+        if (&f == &position) { reposition(); }
+        if (&f == &size)     { resize    (); }
+        if (&f == &title)    { retitle   (); }
+        
+        else {
+          field::container::do_changed(f);
+        }
+      }
+      
+      /* virtual */ void
+      base::reposition()
+      {
+        TRACE("hugh::platform::window::base::reposition");
+
+        throw std::runtime_error("pure virtual function "
+                                 "'hugh::platform::window::base::reposition' called");
+      }
+      
+      /* virtual */ void
+      base::resize()
+      {
+        TRACE("hugh::platform::window::base::resize");
+
+        throw std::runtime_error("pure virtual function "
+                                 "'hugh::platform::window::base::resize' called");
+      }
+      
+      /* virtual */ void
+      base::retitle()
+      {
+        TRACE("hugh::platform::window::base::retitle");
+
+        throw std::runtime_error("pure virtual function "
+                                 "'hugh::platform::window::base::retitle' called");
+      }
+
     } // namespace window {
   
   } // namespace platform {

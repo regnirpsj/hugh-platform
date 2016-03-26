@@ -65,6 +65,12 @@ namespace {
     {
       manager::sub(this);
     }
+
+  protected:
+
+    virtual void reposition() {}
+    virtual void resize()     {}
+    virtual void retitle()    {}
     
   };
 

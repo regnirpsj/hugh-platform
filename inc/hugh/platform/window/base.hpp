@@ -47,8 +47,15 @@ namespace hugh {
       
       protected:
       
-        explicit base(std::string const& /* title */, rect const& /* rect */ = rect::dflt_rect);
-      
+        explicit base(std::string const& /* title */,
+                      rect const&        /* rect  */ = rect::dflt_rect);
+
+        virtual void do_changed(field::base&);
+        
+        virtual void reposition() =0;
+        virtual void resize() =0;
+        virtual void retitle() =0;
+        
       };
       
       // types, exported (class, enum, struct, union, typedef)

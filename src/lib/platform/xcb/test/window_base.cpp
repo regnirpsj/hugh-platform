@@ -67,3 +67,42 @@ BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_base_ctor_fail)
   
   BOOST_REQUIRE_THROW(w.reset(new test(d)), std::runtime_error);
 }
+
+BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_base_position)
+{
+  glm::ivec2 const      p(42, 42);
+  std::unique_ptr<test> w(new test);
+
+  BOOST_CHECK       ( w);
+
+  w->position.set(p);
+
+  BOOST_CHECK       ( p == w->position.get());
+  BOOST_TEST_MESSAGE(*w);
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_base_size)
+{
+  glm::ivec2 const      s(640, 480);
+  std::unique_ptr<test> w(new test);
+
+  BOOST_CHECK       ( w);
+
+  w->size.set(s);
+
+  BOOST_CHECK       ( s == w->size.get());
+  BOOST_TEST_MESSAGE(*w);
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_base_title)
+{
+  std::string const     t("test_hugh_platform_xcb_window_base_title");
+  std::unique_ptr<test> w(new test);
+
+  BOOST_CHECK       ( w);
+
+  w->title.set(t);
+
+  BOOST_CHECK       ( t == w->title.get());
+  BOOST_TEST_MESSAGE(*w);
+}

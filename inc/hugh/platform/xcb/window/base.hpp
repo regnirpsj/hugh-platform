@@ -57,6 +57,10 @@ namespace hugh {
                         rect const&        /* rect    */ = rect::dflt_rect,
                         std::string const& /* display */ = dflt_display_name);
 
+          virtual void reposition();
+          virtual void resize();
+          virtual void retitle();
+        
         };
         
         // variables, exported (extern)

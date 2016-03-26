@@ -177,7 +177,52 @@ namespace hugh {
 
           window::manager::add(window_, this);
         }
+
+        /* virtual */ void
+        base::reposition()
+        {
+          TRACE("hugh::platform::window::xcb::base::reposition");
+          
+          static uint32_t const mask(XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y);
+          /*  */ uint32_t const values[] = { uint32_t(position->x), uint32_t(position->y) };
+          
+          ::xcb_configure_window(connection_, window_, mask, values);
+        }
         
+        /* virtual */ void
+        base::resize()
+        {
+          TRACE("hugh::platform::window::xcb::base::resize");
+          
+          static uint32_t const mask(XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT);
+          /*  */ uint32_t const values[] = { uint32_t(size->x), uint32_t(size->y) };
+          
+          ::xcb_configure_window(connection_, window_, mask, values);
+        }
+        
+        /* virtual */ void
+        base::retitle()
+        {
+          TRACE("hugh::platform::window::xcb::base::retitle");
+
+          static std::array<xcb_atom_enum_t const, 2> const types = {
+            {
+              XCB_ATOM_WM_NAME, XCB_ATOM_WM_ICON_NAME,
+            }
+          };
+          
+          for (auto const& t : types){
+            ::xcb_change_property(connection_,
+                                  XCB_PROP_MODE_REPLACE,
+                                  window_,
+                                  t,
+                                  XCB_ATOM_STRING,
+                                  8,
+                                  title->size(),
+                                  title->c_str());
+          }
+        }
+
       } // namespace window {
 
     } // namespace xcb {

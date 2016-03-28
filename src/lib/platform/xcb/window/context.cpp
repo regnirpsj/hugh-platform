@@ -18,6 +18,7 @@
 
 // includes, system
 
+#include <array>                  // std::array<>
 #include <boost/io/ios_state.hpp> // boost::io::ios_all_saver
 #include <cstdlib>                // ::getenv
 #include <glm/gtx/io.hpp>         // glm::operator<<  (field::container::print_on)

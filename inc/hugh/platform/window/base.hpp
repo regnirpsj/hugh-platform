@@ -6,7 +6,7 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/platform_window_base.hpp                                                   */
+/*  module     :  hugh/platform/window/base.hpp                                                   */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
@@ -24,11 +24,9 @@
 
 // includes, project
 
+#include <hugh/field/adapter/single.hpp>
 #include <hugh/field/container.hpp>
-#include <hugh/field/value/single.hpp>
-#include <hugh/platform/export.h>
 #include <hugh/platform/window/rect.hpp>
-#include <hugh/support/printable.hpp>
 
 namespace hugh {
   
@@ -36,26 +34,37 @@ namespace hugh {
 
     namespace window {
 
-      class HUGH_PLATFORM_EXPORT base : private boost::noncopyable,
-                                        public field::container {
-
+      template <typename C>
+      class base : private boost::noncopyable,
+                   public field::container {
+        
       public:
 
-        field::value::single<std::string> title;    //< title
-        field::value::single<glm::ivec2>  position; //< upper-left corner
-        field::value::single<glm::ivec2>  size;     //< extent
-      
+        using context_type = C;
+        
+        field::adapter::single<std::string> title;    //< title
+        field::adapter::single<glm::uvec2>  position; //< upper-left corner
+        field::adapter::single<glm::uvec2>  size;     //< extent
+    
+        virtual ~base();
+    
       protected:
-      
-        explicit base(std::string const& /* title */,
-                      rect const&        /* rect  */ = rect::dflt_rect);
 
-        virtual void do_changed(field::base&);
+        context_type context_;
         
-        virtual void reposition() =0;
-        virtual void resize() =0;
-        virtual void retitle() =0;
+        explicit base(std::string const& /* title   */,
+                      rect const&        /* rect    */ = rect::dflt_rect,
+                      std::string const& /* display */ = std::string());
         
+      private:
+
+        std::string const& cb_get_title   () const;
+        std::string        cb_set_title   (std::string const&);
+        glm::uvec2 const&  cb_get_position() const;
+        glm::uvec2         cb_set_position(glm::uvec2 const&);
+        glm::uvec2 const&  cb_get_size    () const;
+        glm::uvec2         cb_set_size    (glm::uvec2 const&);
+      
       };
       
       // types, exported (class, enum, struct, union, typedef)
@@ -71,5 +80,7 @@ namespace hugh {
   } // namespace platform {
 
 } // namespace hugh {
+
+#include <hugh/platform/window/base.inl>
 
 #endif // #if !defined(HUGH_PLATFORM_WINDOW_BASE_HPP)

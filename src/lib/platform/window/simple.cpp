@@ -6,7 +6,7 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/platform/window/manager.cpp                                                */
+/*  module     :  hugh/platform/window/simple.cpp                                                 */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
@@ -14,7 +14,7 @@
 
 // include i/f header
 
-#include "hugh/platform/window/manager.hpp"
+#include "hugh/platform/window/simple.hpp"
 
 // includes, system
 
@@ -22,7 +22,7 @@
 
 // includes, project
 
-//#include <>
+#include <hugh/platform/export.h>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
@@ -33,7 +33,7 @@
 namespace {
   
   // types, internal (class, enum, struct, union, typedef)
-  
+
   // variables, internal
   
   // functions, internal
@@ -41,21 +41,21 @@ namespace {
 } // namespace {
 
 namespace hugh {
-    
+  
   namespace platform {
 
     namespace window {
   
       // variables, exported
-      
+  
       // functions, exported
-    
+
     } // namespace window {
   
   } // namespace platform {
-
+  
 } // namespace hugh {
 
 #if defined(_MSC_VER)
-HUGH_PLATFORM_EXPORT void getRidOfLNK4221PlatformWindowManager(){}
+HUGH_PLATFORM_EXPORT void getRidOfLNK4221PlatformWindowSimple(){}
 #endif

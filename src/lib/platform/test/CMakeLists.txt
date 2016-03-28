@@ -8,9 +8,10 @@
 
 cma_print_current_directory()
 
-find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS unit_test_framework)
+find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS system unit_test_framework)
 
 include_directories(SYSTEM ${Boost_INLCUDE_DIR})
+include_directories(       ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(SRC)
 LIST(APPEND SRC "application.cpp")

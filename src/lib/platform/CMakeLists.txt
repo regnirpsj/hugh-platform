@@ -23,8 +23,10 @@ list(APPEND SRC "application/command_line.cpp")
 list(APPEND SRC "application/multi_instance.cpp")
 list(APPEND SRC "application/single_instance.cpp")
 list(APPEND SRC "window/base.cpp")
+list(APPEND SRC "window/interactive.cpp")
 list(APPEND SRC "window/manager.cpp")
 list(APPEND SRC "window/rect.cpp")
+list(APPEND SRC "window/simple.cpp")
 
 #add_definitions("-DHUGH_ALL_TRACE")
 

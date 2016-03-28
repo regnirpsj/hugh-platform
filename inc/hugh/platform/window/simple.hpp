@@ -6,15 +6,15 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/platform/window/manager.cpp                                                */
+/*  module     :  hugh/platform/window/simple.hpp                                                 */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-// include i/f header
+#if !defined(HUGH_PLATFORM_WINDOW_SIMPLE_HPP)
 
-#include "hugh/platform/window/manager.hpp"
+#define HUGH_PLATFORM_WINDOW_SIMPLE_HPP
 
 // includes, system
 
@@ -22,40 +22,49 @@
 
 // includes, project
 
-//#include <>
-
-#define HUGH_USE_TRACE
-#undef HUGH_USE_TRACE
-#include <hugh/support/trace.hpp>
-
-// internal unnamed namespace
-
-namespace {
-  
-  // types, internal (class, enum, struct, union, typedef)
-  
-  // variables, internal
-  
-  // functions, internal
-
-} // namespace {
+#include <hugh/platform/window/base.hpp>
 
 namespace hugh {
-    
+  
   namespace platform {
 
     namespace window {
-  
-      // variables, exported
+
+      template <typename Context, typename Update>
+      class simple : public base<Context> {
+
+      public:
+
+        using inherited   = base<Context>;
+        using update_type = Update;
+
+        explicit simple(std::string const& /* title   */,
+                        rect const&        /* rect    */ = rect::dflt_rect,
+                        std::string const& /* display */ = std::string());
+        virtual ~simple();
+        
+        virtual void display();
+        
+      protected:
+
+        update_type update_;
+        
+      };
       
-      // functions, exported
-    
+      // types, exported (class, enum, struct, union, typedef)
+
+      // variables, exported (extern)
+
+      // functions, inlined (inline)
+  
+      // functions, exported (extern)
+
     } // namespace window {
   
   } // namespace platform {
 
 } // namespace hugh {
 
-#if defined(_MSC_VER)
-HUGH_PLATFORM_EXPORT void getRidOfLNK4221PlatformWindowManager(){}
-#endif
+#include <hugh/platform/window/simple.inl>
+
+#endif // #if !defined(HUGH_PLATFORM_WINDOW_SIMPLE_HPP)

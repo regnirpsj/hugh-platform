@@ -20,11 +20,12 @@
 // includes, project
 
 #include <hugh/platform/window/manager.hpp>
-#include <hugh/platform/window/base.hpp>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
 #include <hugh/support/trace.hpp>
+
+#include <shared.hpp>
 
 // internal unnamed namespace
 
@@ -32,52 +33,9 @@ namespace {
   
   // types, internal (class, enum, struct, union, typedef)
 
-  namespace hpw = hugh::platform::window;
-  
-  template <hpw::manager::window_type T>
-  class window : public hpw::base {
-
-  public:
-
-    class manager : public hpw::manager {
-
-    public:
-
-      static bool add(signed a, base* b)
-      {
-        return hpw::manager::add(T, a, b);
-      }
-
-      static bool sub(base* a)
-      {
-        return hpw::manager::sub(T, a);
-      }
-      
-    };
-    
-    explicit window()
-      : hpw::base("dummy")
-    {
-      manager::add(-1, this);
-    }
-
-    virtual ~window()
-    {
-      manager::sub(this);
-    }
-
-  protected:
-
-    virtual void reposition() {}
-    virtual void resize()     {}
-    virtual void retitle()    {}
-    
-  };
-
-  using window_win32 = window<hpw::manager::window_type::win32>;
-  using window_xcb   = window<hpw::manager::window_type::xcb>;
-
   // variables, internal
+
+  hugh::platform::window::rect const dflt_window_size(10, 10, 640, 480);
   
   // functions, internal
 
@@ -85,48 +43,42 @@ namespace {
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
+#include <boost/test/test_case_template.hpp>
+#include <boost/mpl/list.hpp>
 
-BOOST_AUTO_TEST_CASE(test_hugh_platform_window_ctor)
+using window_types = boost::mpl::list<hugh::platform::window::test::simple,
+                                      hugh::platform::window::test::interactive>;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_platform_window_ctor, W, window_types)
 {
-  namespace hpw = hugh::platform::window;
+  using manager = hugh::platform::window::manager<typename W::context_type>;
 
-  BOOST_CHECK(0 == hpw::manager::count());
+  std::string const  t("ws<" + hugh::support::demangle(typeid(W)) + ">");
   
-  {
-    std::unique_ptr<hpw::base> const w(new window_win32);
+  BOOST_CHECK(manager::empty());
+  
+  {    
+    std::unique_ptr<W> w(new W(t, dflt_window_size));
 
     BOOST_CHECK(nullptr != w);
-    BOOST_CHECK(1 == hpw::manager::count());
-    BOOST_CHECK(1 == hpw::manager::count(hpw::manager::window_type::win32));
+    BOOST_CHECK(1 == manager::count());
   }
   
   {
-    std::unique_ptr<hpw::base> const w(new window_xcb);
-
-    BOOST_CHECK(nullptr != w);
-    BOOST_CHECK(1 == hpw::manager::count());
-    BOOST_CHECK(1 == hpw::manager::count(hpw::manager::window_type::xcb));
-  }
-
-  {
-    std::unique_ptr<hpw::base> const w1(new window_win32);
+    std::unique_ptr<W> w1(new W(t, dflt_window_size));
 
     BOOST_CHECK(nullptr != w1);
-    BOOST_CHECK(1 == hpw::manager::count());
-    BOOST_CHECK(1 == hpw::manager::count(hpw::manager::window_type::win32));
+    BOOST_CHECK(1 == manager::count());
 
     {
-      std::unique_ptr<hpw::base> const w2(new window_xcb);
+      std::unique_ptr<W> w2(new W(t, dflt_window_size));
 
       BOOST_CHECK(nullptr != w2);
-      BOOST_CHECK(2 == hpw::manager::count());
-      BOOST_CHECK(1 == hpw::manager::count(hpw::manager::window_type::win32));
-      BOOST_CHECK(1 == hpw::manager::count(hpw::manager::window_type::xcb));
+      BOOST_CHECK(2 == manager::count());
     }
 
-    BOOST_CHECK(1 == hpw::manager::count());
-    BOOST_CHECK(1 == hpw::manager::count(hpw::manager::window_type::win32));
+    BOOST_CHECK(1 == manager::count());
   }
   
-  BOOST_CHECK(0 == hpw::manager::count());
+  BOOST_CHECK(manager::empty());
 }

@@ -6,15 +6,15 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/platform/window/manager.cpp                                                */
+/*  module     :  hugh/platform/window/interactive.hpp                                            */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-// include i/f header
+#if !defined(HUGH_PLATFORM_WINDOW_INTERACTIVE_HPP)
 
-#include "hugh/platform/window/manager.hpp"
+#define HUGH_PLATFORM_WINDOW_INTERACTIVE_HPP
 
 // includes, system
 
@@ -22,40 +22,49 @@
 
 // includes, project
 
-//#include <>
-
-#define HUGH_USE_TRACE
-#undef HUGH_USE_TRACE
-#include <hugh/support/trace.hpp>
-
-// internal unnamed namespace
-
-namespace {
-  
-  // types, internal (class, enum, struct, union, typedef)
-  
-  // variables, internal
-  
-  // functions, internal
-
-} // namespace {
+#include <hugh/platform/window/simple.hpp>
 
 namespace hugh {
-    
+  
   namespace platform {
 
     namespace window {
-  
-      // variables, exported
+
+      template <typename Context, typename Update, typename Input>
+      class interactive : public simple<Context, Update> {
+
+      public:
+
+        using inherited  = simple<Context, Update>;
+        using input_type = Input;
+
+        explicit interactive(std::string const& /* title   */,
+                             rect const&        /* rect    */ = rect::dflt_rect,
+                             std::string const& /* display */ = std::string());
+        virtual ~interactive();
+        
+        virtual void display();
+        
+      protected:
+
+        input_type input_;
+        
+      };
       
-      // functions, exported
-    
+      // types, exported (class, enum, struct, union, typedef)
+
+      // variables, exported (extern)
+
+      // functions, inlined (inline)
+  
+      // functions, exported (extern)
+
     } // namespace window {
   
   } // namespace platform {
 
 } // namespace hugh {
 
-#if defined(_MSC_VER)
-HUGH_PLATFORM_EXPORT void getRidOfLNK4221PlatformWindowManager(){}
-#endif
+#include <hugh/platform/window/interactive.inl>
+
+#endif // #if !defined(HUGH_PLATFORM_WINDOW_INTERACTIVE_HPP)

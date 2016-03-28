@@ -19,38 +19,23 @@
 
 // includes, project
 
-#include <hugh/platform/window/base.hpp>
+// #include <>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
 #include <hugh/support/trace.hpp>
+
+#include <shared.hpp>
 
 // internal unnamed namespace
 
 namespace {
   
   // types, internal (class, enum, struct, union, typedef)
-
-  class window : public hugh::platform::window::base {
-
-  public:
-
-    explicit window()
-      : hugh::platform::window::base("dummy")
-    {}
-
-    virtual ~window()
-    {}
-    
-  protected:
-
-    virtual void reposition() {}
-    virtual void resize()     {}
-    virtual void retitle()    {}
-    
-  };
   
   // variables, internal
+
+  hugh::platform::window::rect const dflt_window_size(10, 10, 640, 480);
   
   // functions, internal
 
@@ -58,11 +43,28 @@ namespace {
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
+#include <boost/test/test_case_template.hpp>
+#include <boost/mpl/list.hpp>
 
-BOOST_AUTO_TEST_CASE(test_hugh_platform_window_ctor)
+using window_types = boost::mpl::list<hugh::platform::window::test::simple,
+                                      hugh::platform::window::test::interactive>;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_platform_window_ctor, W, window_types)
 {
-  std::unique_ptr<hugh::platform::window::base> const w(new window);
+  TRACE_FUNC;
+  
+  std::string const  t("ws<" + hugh::support::demangle(typeid(W)) + ">");
+  std::unique_ptr<W> w(new W(t, dflt_window_size));
+  
+  BOOST_CHECK(w);
 
-  BOOST_CHECK       (nullptr != w);
+  w->display();
+  
+  BOOST_CHECK(t                            == *w->title);
+  BOOST_CHECK(unsigned(dflt_window_size.x) ==  w->position->x);
+  BOOST_CHECK(unsigned(dflt_window_size.y) ==  w->position->y);
+  BOOST_CHECK(unsigned(dflt_window_size.w) ==  w->size->x);
+  BOOST_CHECK(unsigned(dflt_window_size.h) ==  w->size->y);
+  
   BOOST_TEST_MESSAGE(*w);
 }

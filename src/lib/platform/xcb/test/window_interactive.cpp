@@ -6,7 +6,7 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/platform/xcb/test/window_manager.cpp                                       */
+/*  module     :  hugh/platform/xcb/test/window_simple.cpp                                        */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
@@ -14,12 +14,11 @@
 
 // includes, system
 
-//#include <>
+#include <glm/gtx/io.hpp> // glm::operator<<  (field::container::print_on)
 
 // includes, project
 
-#include <hugh/platform/xcb/window/manager.hpp>
-#include <hugh/platform/xcb/window/simple.hpp>
+#include <hugh/platform/xcb/window.hpp>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
@@ -40,39 +39,14 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_manager)
+BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_interactive)
 {
-  namespace hpw  = hugh::platform::window;
-  namespace hpxw = hugh::platform::xcb::window;
+  namespace hpw = hugh::platform::window;
+  namespace hpx = hugh::platform::xcb;
   
-  BOOST_CHECK(0 == hpw::manager::count());
+  hpx::window::interactive const w("test_platform_xcb_window_interactive",
+                                   hpw::rect(10, 10, 100, 100));
   
-  {
-    std::unique_ptr<hpxw::simple> const w(new hpxw::simple(""));
-
-    BOOST_CHECK(nullptr != w);
-    BOOST_CHECK(1 == hpw ::manager::count());
-    BOOST_CHECK(1 == hpxw::manager::count());
-  }
-  
-  {
-    std::unique_ptr<hpxw::simple> const w1(new hpxw::simple(""));
-
-    BOOST_CHECK(nullptr != w1);
-    BOOST_CHECK(1 == hpw ::manager::count());
-    BOOST_CHECK(1 == hpxw::manager::count());
-
-    {
-      std::unique_ptr<hpxw::simple> const w2(new hpxw::simple(""));
-
-      BOOST_CHECK(nullptr != w2);
-      BOOST_CHECK(2 == hpw ::manager::count());
-      BOOST_CHECK(2 == hpxw::manager::count());
-    }
-
-    BOOST_CHECK(1 == hpw ::manager::count());
-    BOOST_CHECK(1 == hpxw::manager::count());
-  }
-  
-  BOOST_CHECK(0 == hpw::manager::count());
+  BOOST_CHECK       (true);
+  BOOST_TEST_MESSAGE(w);
 }

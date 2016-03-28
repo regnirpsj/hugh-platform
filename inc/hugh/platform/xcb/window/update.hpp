@@ -6,23 +6,24 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/platform/xcb/window/manager.hpp                                            */
+/*  module     :  hugh/platform/xcb/window/update.hpp                                             */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(HUGH_PLATFORM_XCB_WINDOW_MANAGER_HPP)
+#if !defined(HUGH_PLATFORM_XCB_WINDOW_UPDATE_HPP)
 
-#define HUGH_PLATFORM_XCB_WINDOW_MANAGER_HPP
+#define HUGH_PLATFORM_XCB_WINDOW_UPDATE_HPP
 
 // includes, system
 
-//#include <>
+#include <iosfwd> // std::ostream (fwd decl)
 
 // includes, project
 
-#include <hugh/platform/window/manager.hpp>
+#include <hugh/platform/export.h>
+#include <hugh/support/printable.hpp>
 
 namespace hugh {
 
@@ -34,27 +35,23 @@ namespace hugh {
         
         // types, exported (class, enum, struct, union, typedef)
 
-        class base;
+        class context;
         
-        class HUGH_PLATFORM_EXPORT manager : public platform::window::manager {
+        class HUGH_PLATFORM_EXPORT update : public support::printable {
 
         public:
 
-          using id_type = platform::window::manager::id_type;
+          explicit update(context&);
+          virtual ~update();
 
-          static unsigned count();
-          static base*    get(id_type);
-
-          static std::vector<id_type> const& all();
-
-        private:
-
-          friend class base;
-
-          static bool  add(id_type, base*);
-          static bool  sub(base*);
-          static bool  sub(id_type);
+          virtual void print_on(std::ostream&) const;
           
+          void operator()();
+      
+        protected:
+
+          context& ctx_;
+      
         };
         
         // variables, exported (extern)
@@ -64,11 +61,11 @@ namespace hugh {
         // functions, exported (extern)
 
       } // namespace window {
-
+      
     } // namespace xcb {
-
+    
   } // namespace platform {
-
+  
 } // namespace hugh {
 
-#endif // #if !defined(HUGH_PLATFORM_XCB_WINDOW_MANAGER_HPP)
+#endif // #if !defined(HUGH_PLATFORM_XCB_WINDOW_UPDATE_HPP)

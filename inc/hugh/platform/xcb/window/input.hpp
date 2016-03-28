@@ -6,23 +6,24 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/platform/xcb/window/simple.hpp                                             */
+/*  module     :  hugh/platform/xcb/window/input.hpp                                              */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(HUGH_PLATFORM_XCB_WINDOW_SIMPLE_HPP)
+#if !defined(HUGH_PLATFORM_XCB_WINDOW_INPUT_HPP)
 
-#define HUGH_PLATFORM_XCB_WINDOW_SIMPLE_HPP
+#define HUGH_PLATFORM_XCB_WINDOW_INPUT_HPP
 
 // includes, system
 
-//#include <>
+#include <iosfwd> // std::ostream (fwd decl)
 
 // includes, project
 
-#include <hugh/platform/xcb/window/base.hpp>
+#include <hugh/platform/export.h>
+#include <hugh/support/printable.hpp>
 
 namespace hugh {
 
@@ -34,19 +35,23 @@ namespace hugh {
         
         // types, exported (class, enum, struct, union, typedef)
 
-        class HUGH_PLATFORM_EXPORT simple : public base {
+        class context;
+        
+        class HUGH_PLATFORM_EXPORT input : public support::printable {
 
         public:
 
-          using rect = base::rect;
+          explicit input(context&);
+          virtual ~input();
+
+          virtual void print_on(std::ostream&) const;
           
-          explicit simple(std::string const& /* title   */,
-                          rect const&        /* rect    */ = rect::dflt_rect,
-                          std::string const& /* display */ = dflt_display_name);
-          virtual ~simple();
-          
-        private:
-          
+          void operator()();
+      
+        protected:
+
+          context& ctx_;
+      
         };
         
         // variables, exported (extern)
@@ -56,11 +61,11 @@ namespace hugh {
         // functions, exported (extern)
 
       } // namespace window {
-
+      
     } // namespace xcb {
-
+    
   } // namespace platform {
-
+  
 } // namespace hugh {
 
-#endif // #if !defined(HUGH_PLATFORM_XCB_WINDOW_SIMPLE_HPP)
+#endif // #if !defined(HUGH_PLATFORM_XCB_WINDOW_INPUT_HPP)

@@ -6,19 +6,23 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/platform/xcb/test/window_simple.cpp                                        */
+/*  module     :  hugh/platform/xcb/window/input.cpp                                              */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
+// include i/f header
+
+#include "hugh/platform/xcb/window/input.hpp"
+
 // includes, system
 
-#include <glm/gtx/io.hpp> // glm::operator<<  (field::container::print_on)
+#include <ostream> // std::ostream
 
 // includes, project
 
-#include <hugh/platform/xcb/window.hpp>
+#include <hugh/platform/xcb/window/context.hpp>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
@@ -36,17 +40,52 @@ namespace {
 
 } // namespace {
 
-#define BOOST_TEST_MAIN
-#include <boost/test/unit_test.hpp>
+namespace hugh {
 
-BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_simple)
-{
-  namespace hpw = hugh::platform::window;
-  namespace hpx = hugh::platform::xcb;
+  namespace platform {
+
+    namespace xcb {
+
+      namespace window {
+        
+        // variables, exported
+
+        // functions, exported
+
+        /* explicit */
+        input::input(context& a)
+          : support::printable(),
+            ctx_              (a)
+        {
+          TRACE("hugh::platform::xcb::window::input::input");
+        }
+
+        /* virtual */
+        input::~input()
+        {
+          TRACE("hugh::platform::xcb::window::input::~input");
+        }
+
+        /* virtual */ void
+        input::print_on(std::ostream& os) const
+        {
+          TRACE_NEVER("hugh::platform::xcb::window::input::print_on");
+
+          os << '['
+             << ctx_
+             << ']';
+        }
+        
+        void
+        input::operator()()
+        {
+          TRACE("hugh::platform::xcb::window::input::operator()");
+        }
   
-  hpx::window::simple const w("test_platform_xcb_window_simple",
-                              hpw::rect(10, 10, 100, 100));
-  
-  BOOST_CHECK       (true);
-  BOOST_TEST_MESSAGE(w);
-}
+      } // namespace window {
+      
+    } // namespace xcb {
+    
+  } // namespace platform {
+
+} // namespace hugh {

@@ -13,8 +13,7 @@ find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS unit_test_framew
 include_directories(SYSTEM ${Boost_INLCUDE_DIR})
 
 set(SRC)
-list(APPEND SRC "window_base.cpp")
-list(APPEND SRC "window_manager.cpp")
+list(APPEND SRC "window_interactive.cpp")
 list(APPEND SRC "window_simple.cpp")
 
 set(LIBS)

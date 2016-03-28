@@ -6,7 +6,7 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  hugh/platform/xcb/window/simple.cpp                                             */
+/*  module     :  hugh/platform/xcb/window/update.cpp                                             */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
@@ -14,15 +14,15 @@
 
 // include i/f header
 
-#include "hugh/platform/xcb/window/simple.hpp"
+#include "hugh/platform/xcb/window/update.hpp"
 
 // includes, system
 
-//#include <>
+#include <ostream> // std::ostream
 
 // includes, project
 
-//#include <>
+#include <hugh/platform/xcb/window/context.hpp>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
@@ -35,7 +35,7 @@ namespace {
   // types, internal (class, enum, struct, union, typedef)
 
   // variables, internal
-  
+
   // functions, internal
 
 } // namespace {
@@ -49,26 +49,43 @@ namespace hugh {
       namespace window {
         
         // variables, exported
-  
+
         // functions, exported
-
+        
         /* explicit */
-        simple::simple(std::string const& a, rect const& b, std::string const& c)
-          : base(a, b, c)
+        update::update(context& a)
+          : support::printable(),
+            ctx_              (a)
         {
-          TRACE("hugh::platform::xcb::window::simple::simple");
+          TRACE("hugh::platform::xcb::window::update::update");
         }
-        
+
         /* virtual */
-        simple::~simple()
+        update::~update()
         {
-          TRACE("hugh::platform::xcb::window::simple::~simple");
+          TRACE("hugh::platform::xcb::window::update::~update");
+        }
+
+        /* virtual */ void
+        update::print_on(std::ostream& os) const
+        {
+          TRACE_NEVER("hugh::platform::xcb::window::update::print_on");
+          
+          os << '['
+             << ctx_
+             << ']';
         }
         
-      } // namespace window {
-
-    } // namespace xcb {
-
-  } // namespace platform {
+        void
+        update::operator()()
+        {
+          TRACE("hugh::platform::xcb::window::update::operator()");
+        }
   
+      } // namespace window {
+      
+    } // namespace xcb {
+    
+  } // namespace platform {
+
 } // namespace hugh {

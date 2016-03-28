@@ -22,9 +22,9 @@ include_directories(SYSTEM ${XCB_INCLUDE_DIRS})
 include_directories(SYSTEM ${HUGH_INCLUDE_DIRS})
 
 set(SRC)
-list(APPEND SRC "window/base.cpp")
-list(APPEND SRC "window/manager.cpp")
-list(APPEND SRC "window/simple.cpp")
+list(APPEND SRC "window/context.cpp")
+list(APPEND SRC "window/input.cpp")
+list(APPEND SRC "window/update.cpp")
 
 #add_definitions("-DHUGH_ALL_TRACE")
 

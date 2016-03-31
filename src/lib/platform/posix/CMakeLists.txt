@@ -15,15 +15,15 @@ include_directories(SYSTEM ${Boost_INCLUDE_DIR})
 include_directories(SYSTEM ${HUGH_INCLUDE_DIRS})
 
 set(SRC)
-list(APPEND SRC "application/base.cpp")
+list(APPEND SRC application/base.cpp)
 
 set(LIBS)
 list(APPEND LIBS hugh_platform)
 list(APPEND LIBS ${HUGH_LIBRARIES})
 
-set(LIB "${LIB}_posix")
+set(LIB ${LIB}_posix)
 
-cma_setup_library(${LIB} SOURCES ${SRC} DEPENDENCIES ${LIBS}  INCDIR "hugh/platform/posix")
+cma_setup_library(${LIB} SOURCES ${SRC} DEPENDENCIES ${LIBS} INCDIR hugh/platform/posix)
 
 add_subdirectory(test EXCLUDE_FROM_ALL)
 

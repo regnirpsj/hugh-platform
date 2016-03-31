@@ -9,6 +9,7 @@
 find_package(XCB)
 
 if(NOT XCB_FOUND)
+  message(WARNING "Optional XCB support not enabled")
   return()
 endif()
 
@@ -22,20 +23,20 @@ include_directories(SYSTEM ${XCB_INCLUDE_DIRS})
 include_directories(SYSTEM ${HUGH_INCLUDE_DIRS})
 
 set(SRC)
-list(APPEND SRC "window/context.cpp")
-list(APPEND SRC "window/input.cpp")
-list(APPEND SRC "window/update.cpp")
+list(APPEND SRC window/context.cpp)
+list(APPEND SRC window/input.cpp)
+list(APPEND SRC window/update.cpp)
 
-#add_definitions("-DHUGH_ALL_TRACE")
+#add_definitions(-DHUGH_ALL_TRACE)
 
 set(LIBS)
 list(APPEND LIBS hugh_platform)
 list(APPEND LIBS ${HUGH_LIBRARIES})
 list(APPEND LIBS ${XCB_LIBRARIES})
 
-set(LIB "${LIB}_xcb")
+set(LIB ${LIB}_xcb)
 
-cma_setup_library(${LIB} SOURCES ${SRC} DEPENDENCIES ${LIBS}  INCDIR "hugh/platform/xcb")
+cma_setup_library(${LIB} SOURCES ${SRC} DEPENDENCIES ${LIBS}  INCDIR hugh/platform/xcb)
 
 add_subdirectory(test EXCLUDE_FROM_ALL)
 

@@ -13,7 +13,7 @@ find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS unit_test_framew
 include_directories(SYSTEM ${Boost_INLCUDE_DIR})
 
 set(SRC)
-list(APPEND SRC "application.cpp")
+list(APPEND SRC application.cpp)
 
 set(LIBS)
 list(APPEND LIBS ${LIB})

@@ -45,12 +45,13 @@ namespace {
 BOOST_AUTO_TEST_CASE(test_hugh_platform_posix_application_execute)
 {
   namespace hpa = hugh::platform::application;
+  namespace hppa = hugh::platform::posix::application;
   
   using hpa::command_line;
 
-  class app : public hpa::base {
+  class app : public hppa::base {
 
-    using inherited = hpa::base;
+    using inherited = hppa::base;
     
   public:
 

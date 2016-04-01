@@ -35,7 +35,7 @@ namespace {
   
   // variables, internal
 
-  hugh::platform::window::rect const dflt_window_size(10, 10, 640, 480);
+  hugh::platform::window::rect const dflt_rect(10, 10, 640, 480);
   
   // functions, internal
 
@@ -54,17 +54,52 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_platform_window_ctor, W, window_types)
   TRACE_FUNC;
   
   std::string const  t("ws<" + hugh::support::demangle(typeid(W)) + ">");
-  std::unique_ptr<W> w(new W(t, dflt_window_size));
+  std::unique_ptr<W> w(new W(t, dflt_rect));
   
   BOOST_CHECK(w);
 
   w->display();
   
-  BOOST_CHECK(t                            == *w->title);
-  BOOST_CHECK(unsigned(dflt_window_size.x) ==  w->position->x);
-  BOOST_CHECK(unsigned(dflt_window_size.y) ==  w->position->y);
-  BOOST_CHECK(unsigned(dflt_window_size.w) ==  w->size->x);
-  BOOST_CHECK(unsigned(dflt_window_size.h) ==  w->size->y);
+  BOOST_CHECK(t                     == *w->title);
+  BOOST_CHECK(unsigned(dflt_rect.x) ==  w->position->x);
+  BOOST_CHECK(unsigned(dflt_rect.y) ==  w->position->y);
+  BOOST_CHECK(unsigned(dflt_rect.w) ==  w->size->x);
+  BOOST_CHECK(unsigned(dflt_rect.h) ==  w->size->y);
+  
+  BOOST_TEST_MESSAGE(*w);
+}
+
+using window_types = boost::mpl::list<hugh::platform::window::test::simple,
+                                      hugh::platform::window::test::interactive>;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_platform_window_fields, W, window_types)
+{
+  TRACE_FUNC;
+  
+  std::string const  t("ws<" + hugh::support::demangle(typeid(W)) + ">");
+  std::unique_ptr<W> w(new W(t, dflt_rect));
+  
+  BOOST_CHECK(w);
+
+  {
+    std::string const t(hugh::support::demangle(typeid(W)));
+    
+    w->title.set(t);
+    
+    BOOST_CHECK(t == *w->title);
+  }
+
+  {
+    hugh::platform::window::rect const r(0, 0, 1600, 900);
+    
+    w->position.set(glm::uvec2(r.x, r.y));
+    w->size    .set(glm::uvec2(r.w, r.h));
+  
+    BOOST_CHECK(unsigned(r.x) ==  w->position->x);
+    BOOST_CHECK(unsigned(r.y) ==  w->position->y);
+    BOOST_CHECK(unsigned(r.w) ==  w->size->x);
+    BOOST_CHECK(unsigned(r.h) ==  w->size->y);
+  }
   
   BOOST_TEST_MESSAGE(*w);
 }

@@ -14,7 +14,7 @@
 
 // includes, system
 
-//#include <>
+#include <sstream> // std::ostringstream
 
 // includes, project
 
@@ -65,4 +65,32 @@ BOOST_AUTO_TEST_CASE(test_hugh_platform_posix_application_execute)
   using hpa::execute;
   
   BOOST_CHECK(EXIT_SUCCESS == execute<app>(command_line(argc, argv)));
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_print)
+{
+  namespace hpa = hugh::platform::application;
+  namespace hppa = hugh::platform::posix::application;
+  
+  using hpa::command_line;
+
+  class app : public hppa::base {
+
+    using inherited = hppa::base;
+    
+  public:
+
+    explicit app(command_line const& a)
+      : inherited(a) {}
+
+    virtual signed run() { return EXIT_SUCCESS; }
+
+  } instance(command_line(argc, argv));
+
+  std::ostringstream ostr;
+
+  ostr << instance;
+
+  BOOST_CHECK       (!ostr.str().empty());
+  BOOST_TEST_MESSAGE(ostr.str());
 }

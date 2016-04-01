@@ -102,7 +102,7 @@ namespace hugh {
       base::print_on(std::ostream& os) const
       {
         TRACE_NEVER("hugh::platform::application::base::print_on");
-
+        
         os << '['
            << "@0x"      << this << ','
            << "verbose:" << verbose_level_

@@ -26,7 +26,7 @@
 #include <hugh/support/io_utils.hpp>
 
 #define HUGH_USE_TRACE
-//#undef HUGH_USE_TRACE
+#undef HUGH_USE_TRACE
 #include <hugh/support/trace.hpp>
 #if defined(HUGH_USE_TRACE) || defined(HUGH_ALL_TRACE)
 #  include <typeinfo>

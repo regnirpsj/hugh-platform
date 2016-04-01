@@ -14,7 +14,7 @@
 
 // includes, system
 
-//#include <>
+#include <sstream> // std::ostringstream
 
 // includes, project
 
@@ -79,6 +79,29 @@ namespace {
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
+
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_derived_fail)
+{
+  namespace hpa = hugh::platform::application;
+  
+  using hpa::command_line;
+  using hpa::single_instance;
+
+  class single_inst_fail : public single_instance {
+
+  public:
+
+    explicit single_inst_fail(command_line const& a)
+      : single_instance(a) {}
+
+    virtual signed run() { return single_instance::run(); }
+
+  };
+
+  using hpa::execute;
+
+  BOOST_CHECK_THROW(execute<single_inst_fail>(command_line(argc, argv)), std::exception);
+}
 
 BOOST_AUTO_TEST_CASE(test_hugh_platform_application_execute)
 {
@@ -146,4 +169,56 @@ BOOST_AUTO_TEST_CASE(test_hugh_platform_application_execute_single_instance_fail
   using hpa::execute;
 
   BOOST_CHECK(EXIT_SUCCESS != execute<single_inst_fail>(command_line(argc, argv), std::nothrow));
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_commandline_fail)
+{
+  namespace hpa = hugh::platform::application;
+  
+  using hpa::command_line;
+  using hpa::single_instance;
+
+  class single_inst_fail : public single_instance {
+
+  public:
+
+    explicit single_inst_fail(command_line const& a)
+      : single_instance(a) {}
+
+    virtual signed run() { return EXIT_SUCCESS; }
+
+  };
+
+  int const   argc(3);
+  char const* argv[] = { "dummy", "--arg", "opt"};
+  
+  using hpa::execute;
+
+  BOOST_CHECK_THROW(execute<single_inst_fail>(command_line(argc, argv)), std::exception);
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_print)
+{
+  namespace hpa = hugh::platform::application;
+  
+  using hpa::command_line;
+  using hpa::single_instance;
+
+  class single_inst_fail : public single_instance {
+
+  public:
+
+    explicit single_inst_fail(command_line const& a)
+      : single_instance(a) {}
+
+    virtual signed run() { return EXIT_SUCCESS; }
+
+  } instance(command_line(argc, argv));
+
+  std::ostringstream ostr;
+
+  ostr << instance;
+
+  BOOST_CHECK       (!ostr.str().empty());
+  BOOST_TEST_MESSAGE(ostr.str());
 }

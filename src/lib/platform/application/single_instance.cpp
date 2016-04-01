@@ -22,7 +22,7 @@
 
 // includes, project
 
-//#include <>
+#include <hugh/support/io_utils.hpp>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
@@ -91,7 +91,7 @@ namespace hugh {
 
         base::print_on(os);
 
-        os << "\b,@" << instance_ << ']';
+        os << support::ostream::remove(1) << ",@" << instance_ << ']';
       }
     
     } // namespace application {

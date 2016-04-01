@@ -61,7 +61,7 @@ namespace hugh {
 
           using support::ostream::operator<<;
         
-          os << "\b," << input_files_ << ']';
+          os << support::ostream::remove(1) << ',' << input_files_ << ']';
         }
       
         /* explicit */

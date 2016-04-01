@@ -79,7 +79,11 @@ namespace hugh {
           os << c << ',';
         }
       
-        os << (context_list_.empty() ? "" : "\b") << ']';
+        if (!context_list_.empty()) {
+          os << support::ostream::remove(1);
+        }
+
+        os << ']';
       }
 
       template <typename T>

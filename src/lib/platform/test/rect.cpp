@@ -100,17 +100,56 @@ BOOST_AUTO_TEST_CASE(test_hugh_platform_window_rect_op_compare)
 
 BOOST_AUTO_TEST_CASE(test_hugh_platform_window_rect_swap)
 {
-  using namespace hugh::platform::window;
+  using namespace hugh::platform;
 
-  rect const r1c(1, 2, 3, 4);
-  rect const r2c(4, 3, 2, 1);
+  unsigned const     cnt(999); // needs to be 2n+1 for checks to work
+  window::rect const r1c(1, 2, 3, 4);
+  window::rect const r2c(4, 3, 2, 1);
 
   {
-    rect r1(r1c);
-    rect r2(r2c);
+    window::rect r1(r1c);
+    window::rect r2(r2c);
 
-    std::swap(r1, r2);
+    {
+      TRACE_NEVER("std::swap(r1, r2);");
 
+      for (unsigned i(0); i < cnt; ++i) {
+        std::swap(r1, r2);
+      }
+    }
+    
+    BOOST_CHECK(r1 == r2c);
+    BOOST_CHECK(r2 == r1c);
+  }  
+
+  {
+    window::rect r1(r1c);
+    window::rect r2(r2c);
+
+    {
+      TRACE_NEVER("swap(r1, r2);");
+
+      for (unsigned i(0); i < cnt; ++i) {
+        swap(r1, r2);
+      }
+    }
+    
+    BOOST_CHECK(r1 == r2c);
+    BOOST_CHECK(r2 == r1c);
+  }  
+
+  {
+    window::rect r1(r1c);
+    window::rect r2(r2c);
+
+    {
+      TRACE_NEVER("using std::swap; swap(r1, r2);");
+
+      for (unsigned i(0); i < cnt; ++i) {
+        using std::swap; swap(r1, r2);
+      }
+    }
+    
     BOOST_CHECK(r1 == r2c);
     BOOST_CHECK(r2 == r1c);
   }  

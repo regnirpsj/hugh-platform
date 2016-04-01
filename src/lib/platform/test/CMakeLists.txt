@@ -17,6 +17,7 @@ set(SRC)
 LIST(APPEND SRC application.cpp)
 LIST(APPEND SRC command_line.cpp)
 LIST(APPEND SRC manager.cpp)
+LIST(APPEND SRC rect.cpp)
 LIST(APPEND SRC window.cpp)
 
 set(LIBS)

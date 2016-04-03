@@ -94,15 +94,24 @@ namespace hugh {
 
           try {
             options.clear();
-          
-            bpo::store(bpo::command_line_parser(argv_)
-                       .options                (descriptions)
-                       .positional             (positionals)
-                       .run                    (),
-                       options);
-          
+
+            namespace bpocls = boost::program_options::command_line_style;
+            
+            bpo::parsed_options parsed(bpo::command_line_parser(argv_)
+                                       .options                (descriptions)
+                                       .positional             (positionals)
+                                       .style                  (bpocls::unix_style
+                                                                | bpocls::allow_slash_for_short
+                                                                | bpocls::allow_long_disguise
+                                                                )
+                                       .allow_unregistered     ()
+                                       .run                    ());
+            
+            bpo::store (parsed, options);
             bpo::notify(options);
 
+            unrecognized = bpo::collect_unrecognized(parsed.options, bpo::include_positional);
+            
             already_processed_ = true;
           }
 
@@ -111,7 +120,7 @@ namespace hugh {
           
             already_processed_ = false;
 
-            throw ex;
+            throw;
           }
         }
       }

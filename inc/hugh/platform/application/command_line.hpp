@@ -50,7 +50,8 @@ namespace hugh {
         options_description            descriptions;
         variables_map                  options;
         positional_options_description positionals;
-      
+        std::vector<std::string>       unrecognized;
+        
         explicit command_line(int /* argc */, char const* /* argv */[]);
       
         virtual void print_on(std::ostream&) const;

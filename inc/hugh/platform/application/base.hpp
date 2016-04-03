@@ -63,7 +63,7 @@ namespace hugh {
       public:
 
         explicit executor(command_line const&);
-        ~executor();
+                ~executor();
       
         signed run();
     

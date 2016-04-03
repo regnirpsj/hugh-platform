@@ -78,8 +78,8 @@ namespace hugh {
         }
 
         catch (std::exception const& ex) {
-          std::cerr << '\n' << "command-line problem: " << ex.what() << std::endl;
-        
+          std::cerr << '\n' << "command-line problem: " << ex.what() << std::endl;            
+
           print_help = true;
           exit_value = EXIT_FAILURE;
         }

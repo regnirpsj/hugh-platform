@@ -39,6 +39,10 @@ namespace hugh {
 
         public:
 
+          using command_line = platform::application::command_line;
+
+          static bool const positionals; // true
+          
           virtual void print_on(std::ostream&) const;
       
         protected:
@@ -47,7 +51,8 @@ namespace hugh {
       
           string_list_type input_files_;
 
-          explicit base(platform::application::command_line const&);
+          explicit base(command_line const& /* argc/argv            */,
+                        bool                /* positionals as files */ = positionals);
         
         };
       

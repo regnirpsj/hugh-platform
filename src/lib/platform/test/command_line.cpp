@@ -14,11 +14,12 @@
 
 // includes, system
 
-//#include <>
+#include <sstream> // std::ostringstream
 
 // includes, project
 
 #include <hugh/platform/application/command_line.hpp>
+#include <hugh/support/io_utils.hpp>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
@@ -54,6 +55,14 @@ namespace {
       descr_.add_options()
         ("argv3,3",
          "arg #3");
+
+      descr_.add_options()
+        ("argv4,4",
+         "arg #4");
+
+      descr_.add_options()
+        ("argv5,5",
+         "arg #5");
     }
 
     operator bpo::options_description const& () const
@@ -70,8 +79,8 @@ namespace {
   
   // variables, internal
   
-  int const   argc(5);
-  char const* argv[] = { "argv0", "-1", "--argv2", "1", "--argv3" };
+  int const   argc(6);
+  char const* argv[] = { "argv0", "-1", "--argv2", "1", "-argv3", "-45" };
   
   // functions, internal
   
@@ -98,14 +107,52 @@ BOOST_AUTO_TEST_CASE(test_hugh_platform_application_command_line_process)
 
   command_line c(argc, argv);
 
-  c.descriptions.add(description());
-  
-#if defined(WIN32)
-  BOOST_REQUIRE_THROW(c.process(), std::exception);
-#else
+  c.descriptions.add(description());  
   c.process();
-#endif
   
   BOOST_CHECK       (argv[0] == c.argv0);
   BOOST_TEST_MESSAGE(c);
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_command_line_exception)
+{
+  int const   argc(6);
+  char const* argv[] = { "argv0", "-1", "--argv2", "1", "-argv3", "-1" };
+  
+  using hugh::platform::application::command_line;
+
+  command_line c(argc, argv);
+
+  c.descriptions.add(description());
+  
+  BOOST_REQUIRE_THROW(c.process(), std::exception);
+  
+  BOOST_CHECK       (argv[0] == c.argv0);
+  BOOST_TEST_MESSAGE(c);
+}
+
+BOOST_AUTO_TEST_CASE(test_hugh_platform_application_command_line_unrecognized)
+{
+  int const   argc(9);
+  char const* argv[] = { "argv0", "-1", "-argv2", "1", "-x", "-y=x", "--z", "/?", "-x 1,-2" };
+  
+  using hugh::platform::application::command_line;
+
+  command_line c(argc, argv);
+
+  c.descriptions.add(description());
+  
+  c.process();
+  
+  BOOST_CHECK(5 == c.unrecognized.size());
+
+  {
+    using hugh::support::ostream::operator<<;
+
+    std::ostringstream ostr;
+
+    ostr << "unrecognized:" << c.unrecognized;
+    
+    BOOST_TEST_MESSAGE(ostr.str());
+  }
 }

@@ -18,7 +18,8 @@
 
 // includes, system
 
-#include <cstdlib> // EXIT_FAILURE
+#include <boost/exception/diagnostic_information.hpp> // 
+#include <cstdlib>                                    // EXIT_FAILURE
 
 // includes, project
 
@@ -92,8 +93,17 @@ namespace hugh {
         try {
           result = execute<T>(a);
         }
-      
-        catch (std::exception&) { /* ??? */ }
+
+        catch (std::system_error const& ex) {
+          if (!ex.code()) {
+            throw;
+          }
+        }
+        
+        catch (...) {
+          std::cerr << "Unhandled exception!" << std::endl
+                    << boost::current_exception_diagnostic_information();
+        }
       
         return result;
       }

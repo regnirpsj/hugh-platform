@@ -49,7 +49,9 @@ namespace hugh {
       namespace application {
       
         // variables, exported
-  
+
+        /* static */ bool const base::positionals(true);
+        
         // functions, exported
 
         /* virtual */ void
@@ -65,13 +67,13 @@ namespace hugh {
         }
       
         /* explicit */
-        base::base(platform::application::command_line const& a)
+        base::base(platform::application::command_line const& a, bool b)
           : platform::application::single_instance(a),
             input_files_                          ()
         {
           TRACE("hugh::platform::posix::application::base::base");
 
-          {
+          if (b) {
             namespace bpo = boost::program_options;
           
             bpo::options_description od("Command-Line Options");

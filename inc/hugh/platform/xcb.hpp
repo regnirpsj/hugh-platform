@@ -22,6 +22,7 @@
 
 // includes, project
 
+#include <hugh/platform/xcb/io.hpp>
 #include <hugh/platform/xcb/window.hpp>
 
 namespace hugh {

@@ -62,8 +62,8 @@ namespace hugh {
       inline /* virtual */ void
       simple<C,U>::display()
       {
-        TRACE("hugh::platform::window::simple<" + support::demangle(typeid(C)) + ","
-              + support::demangle(typeid(U)) + ">::display");
+        TRACE_NEVER("hugh::platform::window::simple<" + support::demangle(typeid(C)) + ","
+                    + support::demangle(typeid(U)) + ">::display");
 
         update_();
       }

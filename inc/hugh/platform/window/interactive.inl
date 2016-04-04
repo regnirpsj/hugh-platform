@@ -63,8 +63,9 @@ namespace hugh {
       inline /* virtual */ void
       interactive<C,U,I>::display()
       {
-        TRACE("hugh::platform::window::interactive<" + support::demangle(typeid(C)) + ","
-              + support::demangle(typeid(U)) + "," + support::demangle(typeid(I)) + ">::display");
+        TRACE_NEVER("hugh::platform::window::interactive<" + support::demangle(typeid(C)) + ","
+                    + support::demangle(typeid(U)) + "," + support::demangle(typeid(I)) +
+                    ">::display");
 
         input_            ();
         inherited::display();

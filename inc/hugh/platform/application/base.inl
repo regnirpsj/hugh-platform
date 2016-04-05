@@ -20,6 +20,7 @@
 
 #include <boost/exception/diagnostic_information.hpp> // 
 #include <cstdlib>                                    // EXIT_FAILURE
+#include <system_error>                               // std::system_error
 
 // includes, project
 

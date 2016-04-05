@@ -23,6 +23,7 @@
 // includes, project
 
 #include <hugh/platform/window/interactive.hpp>
+#include <hugh/support/printable.hpp>
 
 namespace hugh {
 
@@ -34,7 +35,7 @@ namespace hugh {
       
         // types, exported (class, enum, struct, union, typedef)
 
-        class context {
+        class context : public support::printable {
     
         public:
     
@@ -55,16 +56,21 @@ namespace hugh {
             TRACE("hugh::platform::window::test::context::~context");
           }
 
+          virtual void print_on(std::ostream&) const
+          {
+            TRACE_NEVER("hugh::platform::window::test::context::print_on");
+          }
+          
           glm::uvec2 const& position() const
           {
-            TRACE("hugh::platform::window::test::context:::position(get)");
+            TRACE("hugh::platform::window::test::context::position(get)");
 
             return position_;
           }
 
           glm::uvec2 position(glm::uvec2 const& a)
           {
-            TRACE("hugh::platform::window::test::context:::position(set)");
+            TRACE("hugh::platform::window::test::context::position(set)");
 
             glm::uvec2 const result(position_);
 
@@ -75,14 +81,14 @@ namespace hugh {
       
           glm::uvec2 const& size() const
           {
-            TRACE("hugh::platform::window::test::context:::size(get)");
+            TRACE("hugh::platform::window::test::context::size(get)");
 
             return size_;
           }
 
           glm::uvec2 size(glm::uvec2 const& a)
           {
-            TRACE("hugh::platform::window::test::context:::size(set)");
+            TRACE("hugh::platform::window::test::context::size(set)");
 
             glm::uvec2 const result(size_);
 
@@ -93,14 +99,14 @@ namespace hugh {
 
           std::string const& title() const
           {
-            TRACE("hugh::platform::window::test::context:::title(get)");
+            TRACE("hugh::platform::window::test::context::title(get)");
 
             return title_;
           }
 
           std::string title(std::string const& a)
           {
-            TRACE("hugh::platform::window::test::context:::title(set)");
+            TRACE("hugh::platform::window::test::context::title(set)");
 
             std::string const result(title_);
 

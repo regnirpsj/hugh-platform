@@ -53,6 +53,17 @@ namespace hugh {
       }
 
       template <typename C>
+      inline /* virtual */ void
+      base<C>::print_on(std::ostream& os) const
+      {
+        TRACE_NEVER("hugh::platform::window::base<" + support::demangle(typeid(C)) + ">::print_on");
+
+        field::container::print_on(os);
+
+        os << hugh::support::ostream::remove(1) << ',' << context_ << ']';
+      }
+      
+      template <typename C>
       inline /* explicit */
       base<C>::base(std::string const& a, rect const& b, std::string const& c)
         : boost::noncopyable(),

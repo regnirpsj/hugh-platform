@@ -133,7 +133,8 @@ namespace hugh {
         return os;
       }
 
-      std::ostream& operator<<(std::ostream& os, ::xcb_atom_enum_t const& a)
+      std::ostream&
+      operator<<(std::ostream& os, ::xcb_atom_enum_t const& a)
       {
         static std::array<std::string const, 69> const types = {
           { "NONE/ANY", "PRIMARY", "SECONDARY", "ARC", "ATOM", "BITMAP", "CARDINAL", "COLORMAP",

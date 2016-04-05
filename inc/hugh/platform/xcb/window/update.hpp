@@ -18,7 +18,8 @@
 
 // includes, system
 
-#include <iosfwd> // std::ostream (fwd decl)
+#include <iosfwd>    // std::ostream (fwd decl)
+#include <xcb/xcb.h> // ::xcb_*
 
 // includes, project
 
@@ -51,7 +52,9 @@ namespace hugh {
         protected:
 
           context& ctx_;
-      
+
+          bool handle_xcb_event(::xcb_generic_event_t const&);
+          
         };
         
         // variables, exported (extern)

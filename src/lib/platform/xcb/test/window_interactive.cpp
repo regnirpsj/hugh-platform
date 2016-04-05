@@ -15,13 +15,14 @@
 // includes, system
 
 #include <glm/gtx/io.hpp> // glm::operator<<  (field::container::print_on)
+#include <sstream>        // std::ostringstream
 
 // includes, project
 
 #include <hugh/platform/xcb/window.hpp>
 
 #define HUGH_USE_TRACE
-#undef HUGH_USE_TRACE
+//#undef HUGH_USE_TRACE
 #include <hugh/support/trace.hpp>
 
 // internal unnamed namespace
@@ -30,6 +31,43 @@ namespace {
   
   // types, internal (class, enum, struct, union, typedef)
 
+  class window : public hugh::platform::xcb::window::interactive {
+
+  public:
+
+    using inherited  = hugh::platform::xcb::window::interactive;
+    using rect       = hugh::platform::window::rect;
+    using duration   = hugh::support::clock::duration;
+    using time_point = hugh::support::clock::time_point;
+    
+    explicit window(std::string const& a,
+                    duration const&    b = std::chrono::seconds(1),
+                    rect const&        c = rect::dflt_rect,
+                    std::string const& d = std::string())
+      : inherited(a, c, d),
+        duration_(b),
+        start_   (hugh::support::clock::now())
+    {
+      TRACE("<unnamed>::window::window");
+    }
+
+    virtual void display()
+    {
+      TRACE("<unnamed>::window::display");
+      
+      while (duration_ > (hugh::support::clock::now() - start_)) {
+        inherited::display();
+        hugh::support::sleep(std::chrono::milliseconds(100));
+      }
+    }
+
+  private:
+
+    duration const   duration_;
+    time_point const start_;
+    
+  };
+  
   // variables, internal
   
   // functions, internal
@@ -41,12 +79,16 @@ namespace {
 
 BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_interactive)
 {
-  namespace hpw = hugh::platform::window;
-  namespace hpx = hugh::platform::xcb;
+  window w("test_platform_xcb_window_interactive",
+           std::chrono::milliseconds(900),
+           window::rect(10, 10, 800, 600));
   
-  hpx::window::interactive const w("test_platform_xcb_window_interactive",
-                                   hpw::rect(10, 10, 100, 100));
+  w.display();
   
-  BOOST_CHECK       (true);
-  BOOST_TEST_MESSAGE(w);
+  std::ostringstream ostr;
+
+  ostr << w;
+
+  BOOST_CHECK       (!ostr.str().empty());
+  BOOST_TEST_MESSAGE( ostr.str());
 }

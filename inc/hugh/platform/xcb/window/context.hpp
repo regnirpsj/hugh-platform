@@ -18,9 +18,15 @@
 
 // includes, system
 
-#include <glm/glm.hpp>
-#include <string>
-#include <xcb/xcb.h>
+#include <functional>    // std::function<>
+#include <glm/glm.hpp>   // glm::*
+#include <memory>        // std::unique_ptr<>
+#include <mutex>         // std::mutex
+#include <string>        // std::string
+#include <thread>        // std::thread
+#include <unordered_map> // std::unordered_map<>
+#include <vector>        // std::vector<>
+#include <xcb/xcb.h>     // ::xcb_*
 
 // includes, project
 
@@ -38,11 +44,15 @@ namespace hugh {
         
         // types, exported (class, enum, struct, union, typedef)
 
+        class input;
+        class update;
+        
         class HUGH_PLATFORM_EXPORT context : public support::printable {
     
         public:
     
-          using rect = platform::window::rect;
+          using rect                  = platform::window::rect;
+          using handler_callback_type = std::function<bool (::xcb_generic_event_t const&)>;
 
           static std::string const dflt_display_name; // getenv(DISPLAY) || ":0"
           
@@ -62,6 +72,9 @@ namespace hugh {
 
         protected:
 
+          friend class input;
+          friend class update;
+          
           std::string       title_;
           glm::uvec2        position_;
           glm::uvec2        size_;
@@ -71,6 +84,26 @@ namespace hugh {
           xcb_window_t      window_;
           xcb_gcontext_t    gcontext_;
           
+          void flush() const;
+          
+        private:
+
+          using handler_list_type = std::vector<handler_callback_type>;
+          using handler_map_type  = std::unordered_map<uint8_t, handler_list_type>;
+
+          handler_map_type handler_map_;
+          std::mutex       handler_map_mutex_;
+          
+          bool add(uint8_t /* event type */, handler_callback_type /* handler */);
+          bool sub(uint8_t /* event type */, handler_callback_type /* handler */);
+          
+        private:
+          
+          std::unique_ptr<std::thread> event_listener_;
+          bool                         event_listener_active_;
+          
+          void event_listener_loop();
+
         };
         
         // variables, exported (extern)

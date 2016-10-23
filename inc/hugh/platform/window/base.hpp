@@ -46,7 +46,7 @@ namespace hugh {
         field::adapter::single<glm::uvec2>  position; //< upper-left corner
         field::adapter::single<glm::uvec2>  size;     //< extent
     
-        virtual ~base();
+        virtual ~base() noexcept(false);
 
         virtual void print_on(std::ostream&) const;
         

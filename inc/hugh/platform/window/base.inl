@@ -42,16 +42,20 @@ namespace hugh {
   
       template <typename C>
       inline /* virtual */
-      base<C>::~base()
+      base<C>::~base() noexcept(false)
       {
         TRACE("hugh::platform::window::base<" + support::demangle(typeid(C)) + ">::~base");
 
         if (!window::manager<C>::sub(&context_)) {
-          throw std::runtime_error("hugh::platform::window::base<" + support::demangle(typeid(C)) +
-                                   ">::~base: unable to deregister window context");
+          // only throw if no other exception is being processed
+          if (!std::uncaught_exception()) {
+            throw std::runtime_error("hugh::platform::window::base<" +
+                                     support::demangle(typeid(C)) +
+                                     ">::~base: unable to deregister window context");
+          }
         }
       }
-
+      
       template <typename C>
       inline /* virtual */ void
       base<C>::print_on(std::ostream& os) const

@@ -81,7 +81,7 @@ namespace hugh {
 
         using support::ostream::operator<<;
       
-        os << '[' << argv_ << ',' << ((already_processed_) ? "" : "!") << "processed"<< ']';
+        os << '[' << argv_ << ',' << ((already_processed_) ? "" : "!") << "processed" << ']';
       }
 
       void
@@ -96,28 +96,29 @@ namespace hugh {
             options.clear();
 
             namespace bpocls = boost::program_options::command_line_style;
-            
-            bpo::parsed_options parsed(bpo::command_line_parser(argv_)
-                                       .options                (descriptions)
-                                       .positional             (positionals)
-                                       .style                  (bpocls::unix_style
-                                                                | bpocls::allow_slash_for_short
-                                                                | bpocls::allow_long_disguise
-                                                                )
-                                       .allow_unregistered     ()
-                                       .run                    ());
+
+            bpo::parsed_options const parsed(bpo::command_line_parser(argv_)
+                                             .allow_unregistered()
+                                             .options           (descriptions)
+                                             .positional        (positionals)
+                                             .style             (bpocls::unix_style
+                                                                 | bpocls::allow_slash_for_short
+                                                                 | bpocls::allow_long_disguise
+                                                                 )
+                                             .run());
             
             bpo::store (parsed, options);
             bpo::notify(options);
-
+            
             unrecognized = bpo::collect_unrecognized(parsed.options, bpo::include_positional);
             
             already_processed_ = true;
           }
 
           catch (std::exception const& ex) {
-            options.clear();
-          
+            options     .clear();
+            unrecognized.clear();
+            
             already_processed_ = false;
 
             throw;

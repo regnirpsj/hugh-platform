@@ -97,7 +97,8 @@ namespace hugh {
 
         catch (std::system_error const& ex) {
           if (!ex.code()) {
-            throw;
+            std::cerr << "Unhandled exception!" << std::endl
+                      << boost::current_exception_diagnostic_information();
           }
         }
         

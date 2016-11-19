@@ -406,4 +406,4 @@ namespace hugh {
   
 } // namespace hugh {
 
-#endif // #if !defined(// HUGH_PLATFORM_// HUGH_PLATFORM_::XCB_IO_HPP)
+#endif // #if !defined(HUGH_PLATFORM_XCB_IO_HPP)

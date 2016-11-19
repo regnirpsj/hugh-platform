@@ -12,6 +12,8 @@ find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS unit_test_framew
 
 include_directories(SYSTEM ${Boost_INLCUDE_DIR})
 
+#add_definitions(-DHUGH_ALL_TRACE)
+
 set(SRC)
 list(APPEND SRC io.cpp)
 list(APPEND SRC window_interactive.cpp)

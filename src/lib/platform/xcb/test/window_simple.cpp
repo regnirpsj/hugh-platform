@@ -22,7 +22,7 @@
 #include <hugh/platform/xcb/window.hpp>
 
 #define HUGH_USE_TRACE
-//#undef HUGH_USE_TRACE
+#undef HUGH_USE_TRACE
 #include <hugh/support/trace.hpp>
 
 // internal unnamed namespace

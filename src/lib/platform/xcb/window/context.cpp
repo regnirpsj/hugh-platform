@@ -481,7 +481,7 @@ namespace hugh {
                           << '\n';
               }
             } else {
-#if 1
+#if defined(HUGH_ALL_TRACE)
               std::cout << hugh::support::trace::prefix()
                         << "hugh::platform::xcb::window::context::event_listener_loop: "
                         << "received nullptr event"

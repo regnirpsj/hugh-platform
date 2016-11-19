@@ -109,7 +109,7 @@ namespace hugh {
           event_listener_.reset(new std::thread(std::bind(&context::event_listener_loop, this)));
           event_listener_active_ = true;
 
-          screen_ = ::xcb_setup_roots_iterator(xcb_get_setup(connection_)).data;
+          screen_ = ::xcb_setup_roots_iterator(::xcb_get_setup(connection_)).data;
           window_ = ::xcb_generate_id(connection_);
 
           {
@@ -150,7 +150,7 @@ namespace hugh {
             title(title_);
           }
 
-          gcontext_ = xcb_generate_id(connection_);
+          gcontext_ = ::xcb_generate_id(connection_);
 
           {
             uint32_t const mask(XCB_GC_FOREGROUND | XCB_GC_GRAPHICS_EXPOSURES);
@@ -359,7 +359,7 @@ namespace hugh {
             
             fnType** fnPointer = f.template target<fnType*>();
             
-            return size_t(*fnPointer);
+            return (fnPointer) ? size_t(*fnPointer) : 0;
           }
           
           struct predicate {
@@ -370,9 +370,9 @@ namespace hugh {
               : lhs(target_address(a))
             {}
 
-            bool operator()(context::handler_callback_type) const
+            bool operator()(context::handler_callback_type rhs) const
             {
-              return false; // lhs == target_address(rhs);
+              return lhs == target_address(rhs);
             }
             
             size_t const lhs;

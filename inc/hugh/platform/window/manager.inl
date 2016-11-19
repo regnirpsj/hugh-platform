@@ -39,7 +39,7 @@ namespace hugh {
 
     namespace window {
 
-      //
+      // variables, static 
 
       template <typename T>
       /* static */ typename manager<T>::context_list_type manager<T>::context_list_;

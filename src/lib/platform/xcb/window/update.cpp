@@ -52,8 +52,9 @@ namespace {
                             | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
                             | XCB_EVENT_MASK_FOCUS_CHANGE);
   
-  std::array<uint8_t, 13> const event_types = {
+  std::array<uint8_t, 14> const event_types = {
     XCB_CONFIGURE_NOTIFY,
+    XCB_DESTROY_NOTIFY,
     XCB_EXPOSE,
     XCB_ENTER_NOTIFY,
     XCB_LEAVE_NOTIFY,

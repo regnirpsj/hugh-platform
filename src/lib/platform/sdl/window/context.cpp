@@ -66,16 +66,15 @@ namespace hugh {
 
         /* explicit */
         context::context(std::string const& a, rect const& b, std::string const& c)
-          : support::printable    (),
-            title_                (a),
-            position_             (glm::uvec2((0 > b.x) ? 0 : b.x,
-                                              (0 > b.y) ? 0 : b.y)),
-            size_                 (glm::uvec2((1 > b.w) ? 1 : b.w,
-                                              (1 > b.h) ? 1 : b.h)),
-            window_               (::SDL_CreateWindow(title_.c_str(),
-                                                      position_.x, position_.y,
-                                                      size_.x,     size_.y,
-                                                      SDL_WINDOW_SHOWN))
+          : support::printable(),
+            title_            (a),
+            position_         (glm::uvec2((0 > b.x) ? 0 : b.x,
+                                          (0 > b.y) ? 0 : b.y)),
+            size_             (glm::uvec2((1 > b.w) ? 1 : b.w,
+                                          (1 > b.h) ? 1 : b.h)),
+            window_           (::SDL_CreateWindow(title_.c_str(),
+                                                  position_.x, position_.y, size_.x, size_.y,
+                                                  SDL_WINDOW_RESIZABLE))
         {
           TRACE("hugh::platform::sdl::window::context::context");
 

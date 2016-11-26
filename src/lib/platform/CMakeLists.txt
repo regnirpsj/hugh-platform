@@ -8,7 +8,7 @@
 
 cma_print_current_directory()
 
-find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS program_options)
+find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS filesystem program_options)
 find_package(GLM   ${GLM_MINIMUM_VERSION}   REQUIRED)
 find_package(HUGH                           REQUIRED COMPONENTS field support)
 

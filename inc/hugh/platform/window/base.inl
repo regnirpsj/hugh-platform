@@ -18,7 +18,8 @@
 
 // includes, system
 
-#include <stdexcept> // std::runtime_error
+#include <glm/gtx/io.hpp> // glm::operator<<
+#include <stdexcept>      // std::runtime_error
 
 // includes, project
 

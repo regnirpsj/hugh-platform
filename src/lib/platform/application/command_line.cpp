@@ -115,7 +115,7 @@ namespace hugh {
             already_processed_ = true;
           }
 
-          catch (std::exception const& ex) {
+          catch (std::exception const&) {
             options     .clear();
             unrecognized.clear();
             

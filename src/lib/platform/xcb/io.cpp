@@ -19,8 +19,7 @@
 // includes, system
 
 #include <array>                  // std::array<>
-#include <boost/io/ios_state.hpp> // boost::io::ios_all_saver
-#include <iomanip>                // std::setfill, std::setw
+//#include <boost/io/ios_state.hpp> // boost::io::ios_all_saver
 #include <ostream>                // std::ostream
 #include <sstream>                // std::ostringstream
 #include <string>                 // std:string
@@ -45,54 +44,6 @@ namespace {
   // variables, internal
   
   // functions, internal
-
-  template <typename T, typename S, std::size_t L>
-  inline std::ostream&
-  get_enum(std::ostream& os, T const& a, std::array<S, L> const& b)
-  {
-    std::ostream::sentry const cerberus(os);
-    
-    if (cerberus) {
-      os << '[';
-
-      if ((0 <= unsigned(a)) && (unsigned(a) < b.size())) {
-        os << b[a];
-      } else {
-        os << "INVALID (" << unsigned(a) << ')';
-      }
-
-      os << ']';
-    }
-
-    return os;
-  }
-
-  template <typename T, typename S, std::size_t L>
-  inline std::ostream&
-  get_flags(std::ostream& os, T const& a, std::array<std::pair<T, S>, L> const& b)
-  {
-    std::ostream::sentry const cerberus(os);
-    
-    if (cerberus) {
-      os << '[';
-
-      if (a) {
-        for (auto f : b) {
-          if (a & f.first) {
-            os << f.second << '|';
-          }
-        }
-      
-        os << hugh::support::ostream::remove(1);
-      } else {
-        os << "NONE";
-      }
-
-      os << ']';
-    }
-
-    return os;
-  }
 
   inline std::string
   get_response_label(uint8_t a)
@@ -136,22 +87,79 @@ namespace hugh {
       std::ostream&
       operator<<(std::ostream& os, ::xcb_atom_enum_t const& a)
       {
-        static std::array<std::string const, 69> const types = {
-          { "NONE/ANY", "PRIMARY", "SECONDARY", "ARC", "ATOM", "BITMAP", "CARDINAL", "COLORMAP",
-            "CURSOR", "CUT_BUFFER0", "CUT_BUFFER1", "CUT_BUFFER2", "CUT_BUFFER3", "CUT_BUFFER4",
-            "CUT_BUFFER5", "CUT_BUFFER6", "CUT_BUFFER7", "DRAWABLE", "FONT", "INTEGER", "PIXMAP",
-            "POINT", "RECTANGLE", "RESOURCE_MANAGER", "RGB_COLOR_MAP", "RGB_BEST_MAP" ,
-            "RGB_BLUE_MAP", "RGB_DEFAULT_MAP", "RGB_GRAY_MAP", "RGB_GREEN_MAP", "RGB_RED_MAP",
-            "STRING", "VISUALID", "WINDOW", "WM_COMMAND", "WM_HINTS", "WM_CLIENT_MACHINE",
-            "WM_ICON_NAME", "WM_ICON_SIZE", "WM_NAME", "WM_NORMAL_HINTS", "WM_SIZE_HINTS",
-            "WM_ZOOM_HINTS", "MIN_SPACE", "NORM_SPACE", "MAX_SPACE", "END_SPACE", "SUPERSCRIPT_X",
-            "SUPERSCRIPT_Y", "SUBSCRIPT_X", "SUBSCRIPT_Y", "UNDERLINE_POSITION",
-            "UNDERLINE_THICKNESS", "STRIKEOUT_ASCENT", "STRIKEOUT_DESCENT", "ITALIC_ANGLE",
-            "X_HEIGHT", "QUAD_WIDTH", "WEIGHT", "POINT_SIZE", "RESOLUTION", "COPYRIGHT", "NOTICE",
-            "FONT_NAME", "FAMILY_NAME", "FULL_NAME", "CAP_HEIGHT", "WM_CLASS", "WM_TRANSIENT_FOR", }
+        static std::array<std::pair<::xcb_atom_enum_t const, std::string const>, 69> const types = {
+          std::make_pair(XCB_ATOM_ANY, "NONE/ANY"),
+          std::make_pair(XCB_ATOM_PRIMARY, "PRIMARY"),
+          std::make_pair(XCB_ATOM_SECONDARY, "SECONDARY"),
+          std::make_pair(XCB_ATOM_ARC, "ARC"),
+          std::make_pair(XCB_ATOM_ATOM, "ATOM"),
+          std::make_pair(XCB_ATOM_BITMAP, "BITMAP"),
+          std::make_pair(XCB_ATOM_CARDINAL, "CARDINAL"),
+          std::make_pair(XCB_ATOM_COLORMAP, "COLORMAP"),
+          std::make_pair(XCB_ATOM_CURSOR, "CURSOR"),
+          std::make_pair(XCB_ATOM_CUT_BUFFER0, "CUT_BUFFER0"),
+          std::make_pair(XCB_ATOM_CUT_BUFFER1, "CUT_BUFFER1"),
+          std::make_pair(XCB_ATOM_CUT_BUFFER2, "CUT_BUFFER2"),
+          std::make_pair(XCB_ATOM_CUT_BUFFER3, "CUT_BUFFER3"),
+          std::make_pair(XCB_ATOM_CUT_BUFFER4, "CUT_BUFFER4"),
+          std::make_pair(XCB_ATOM_CUT_BUFFER5, "CUT_BUFFER5"),
+          std::make_pair(XCB_ATOM_CUT_BUFFER6, "CUT_BUFFER6"),
+          std::make_pair(XCB_ATOM_CUT_BUFFER7, "CUT_BUFFER7"),
+          std::make_pair(XCB_ATOM_DRAWABLE, "DRAWABLE"),
+          std::make_pair(XCB_ATOM_FONT, "FONT"),
+          std::make_pair(XCB_ATOM_INTEGER, "INTEGER"),
+          std::make_pair(XCB_ATOM_PIXMAP, "PIXMAP"),
+          std::make_pair(XCB_ATOM_POINT, "POINT"),
+          std::make_pair(XCB_ATOM_RECTANGLE, "RECTANGLE"),
+          std::make_pair(XCB_ATOM_RESOURCE_MANAGER, "RESOURCE_MANAGER"),
+          std::make_pair(XCB_ATOM_RGB_COLOR_MAP, "RGB_COLOR_MAP"),
+          std::make_pair(XCB_ATOM_RGB_BEST_MAP, "RGB_BEST_MAP"),
+          std::make_pair(XCB_ATOM_RGB_BLUE_MAP, "RGB_BLUE_MAP"),
+          std::make_pair(XCB_ATOM_RGB_DEFAULT_MAP, "RGB_DEFAULT_MAP"),
+          std::make_pair(XCB_ATOM_RGB_GRAY_MAP, "RGB_GRAY_MAP"),
+          std::make_pair(XCB_ATOM_RGB_GREEN_MAP, "RGB_GREEN_MAP"),
+          std::make_pair(XCB_ATOM_RGB_RED_MAP, "RGB_RED_MAP"),
+          std::make_pair(XCB_ATOM_STRING, "STRING"),
+          std::make_pair(XCB_ATOM_VISUALID, "VISUALID"),
+          std::make_pair(XCB_ATOM_WINDOW, "WINDOW"),
+          std::make_pair(XCB_ATOM_WM_COMMAND, "WM_COMMAND"),
+          std::make_pair(XCB_ATOM_WM_HINTS, "WM_HINTS"),
+          std::make_pair(XCB_ATOM_WM_CLIENT_MACHINE, "WM_CLIENT_MACHINE"),
+          std::make_pair(XCB_ATOM_WM_ICON_NAME, "WM_ICON_NAME"),
+          std::make_pair(XCB_ATOM_WM_ICON_SIZE, "WM_ICON_SIZE"),
+          std::make_pair(XCB_ATOM_WM_NAME, "WM_NAME"),
+          std::make_pair(XCB_ATOM_WM_NORMAL_HINTS, "WM_NORMAL_HINTS"),
+          std::make_pair(XCB_ATOM_WM_SIZE_HINTS, "WM_SIZE_HINTS"),
+          std::make_pair(XCB_ATOM_WM_ZOOM_HINTS, "WM_ZOOM_HINTS"),
+          std::make_pair(XCB_ATOM_MIN_SPACE, "MIN_SPACE"),
+          std::make_pair(XCB_ATOM_NORM_SPACE, "NORM_SPACE"),
+          std::make_pair(XCB_ATOM_MAX_SPACE, "MAX_SPACE"),
+          std::make_pair(XCB_ATOM_END_SPACE, "END_SPACE"),
+          std::make_pair(XCB_ATOM_SUPERSCRIPT_X, "SUPERSCRIPT_X"),
+          std::make_pair(XCB_ATOM_SUPERSCRIPT_Y, "SUPERSCRIPT_Y"),
+          std::make_pair(XCB_ATOM_SUBSCRIPT_X, "SUBSCRIPT_X"),
+          std::make_pair(XCB_ATOM_SUBSCRIPT_Y, "SUBSCRIPT_Y"),
+          std::make_pair(XCB_ATOM_UNDERLINE_POSITION, "UNDERLINE_POSITION"),
+          std::make_pair(XCB_ATOM_UNDERLINE_THICKNESS, "UNDERLINE_THICKNESS"),
+          std::make_pair(XCB_ATOM_STRIKEOUT_ASCENT, "STRIKEOUT_ASCENT"),
+          std::make_pair(XCB_ATOM_STRIKEOUT_DESCENT, "STRIKEOUT_DESCENT"),
+          std::make_pair(XCB_ATOM_ITALIC_ANGLE, "ITALIC_ANGLE"),
+          std::make_pair(XCB_ATOM_X_HEIGHT, "X_HEIGHT"),
+          std::make_pair(XCB_ATOM_QUAD_WIDTH, "QUAD_WIDTH"),
+          std::make_pair(XCB_ATOM_WEIGHT, "WEIGHT"),
+          std::make_pair(XCB_ATOM_POINT_SIZE, "POINT_SIZE"),
+          std::make_pair(XCB_ATOM_RESOLUTION, "RESOLUTION"),
+          std::make_pair(XCB_ATOM_COPYRIGHT, "COPYRIGHT"),
+          std::make_pair(XCB_ATOM_NOTICE, "NOTICE"),
+          std::make_pair(XCB_ATOM_FONT_NAME, "FONT_NAME"),
+          std::make_pair(XCB_ATOM_FAMILY_NAME, "FAMILY_NAME"),
+          std::make_pair(XCB_ATOM_FULL_NAME, "FULL_NAME"),
+          std::make_pair(XCB_ATOM_CAP_HEIGHT, "CAP_HEIGHT"),
+          std::make_pair(XCB_ATOM_WM_CLASS, "WM_CLASS"),
+          std::make_pair(XCB_ATOM_WM_TRANSIENT_FOR, "WM_TRANSIENT_FOR"),
         };
 
-        return get_enum(os, a, types);
+        return os << support::ostream::enumerate(a, types);
       }
       
       std::ostream&
@@ -575,31 +583,33 @@ namespace hugh {
       std::ostream&
       operator<<(std::ostream& os, ::xcb_notify_detail_t const& a)
       {
-        static std::array<std::string const, 8> const types = {
-          { "NOTIFY_DETAIL_ANCESTOR",
-            "NOTIFY_DETAIL_VIRTUAL",
-            "NOTIFY_DETAIL_INFERIOR",
-            "NOTIFY_DETAIL_NONLINEAR",
-            "NOTIFY_DETAIL_NONLINEAR_VIRTUAL",
-            "NOTIFY_DETAIL_POINTER",
-            "NOTIFY_DETAIL_POINTER_ROOT",
-            "NOTIFY_DETAIL_NONE", }
+        static std::array<std::pair<::xcb_notify_detail_t const, std::string const>, 8> const
+          types = {
+          std::make_pair(XCB_NOTIFY_DETAIL_ANCESTOR, "NOTIFY_DETAIL_ANCESTOR"),
+          std::make_pair(XCB_NOTIFY_DETAIL_VIRTUAL, "NOTIFY_DETAIL_VIRTUAL"),
+          std::make_pair(XCB_NOTIFY_DETAIL_INFERIOR, "NOTIFY_DETAIL_INFERIOR"),
+          std::make_pair(XCB_NOTIFY_DETAIL_NONLINEAR, "NOTIFY_DETAIL_NONLINEAR"),
+          std::make_pair(XCB_NOTIFY_DETAIL_NONLINEAR_VIRTUAL, "NOTIFY_DETAIL_NONLINEAR_VIRTUAL"),
+          std::make_pair(XCB_NOTIFY_DETAIL_POINTER, "NOTIFY_DETAIL_POINTER"),
+          std::make_pair(XCB_NOTIFY_DETAIL_POINTER_ROOT, "NOTIFY_DETAIL_POINTER_ROOT"),
+          std::make_pair(XCB_NOTIFY_DETAIL_NONE, "NOTIFY_DETAIL_NONE"),
         };
 
-        return get_enum(os, a, types);
+        return os << support::ostream::enumerate(a, types);
       }
       
       std::ostream&
       operator<<(std::ostream& os, ::xcb_notify_mode_t const& a)
       {
-        static std::array<std::string const, 4> const types = {
-          { "NOTIFY_MODE_NORMAL",
-            "NOTIFY_MODE_GRAB",
-            "NOTIFY_MODE_UNGRAB",
-            "NOTIFY_MODE_WHILE_GRABBED", }
+        static std::array<std::pair<::xcb_notify_mode_t const, std::string const>, 4> const
+          types = {
+          std::make_pair(XCB_NOTIFY_MODE_NORMAL, "NOTIFY_MODE_NORMAL"),
+          std::make_pair(XCB_NOTIFY_MODE_GRAB, "NOTIFY_MODE_GRAB"),
+          std::make_pair(XCB_NOTIFY_MODE_UNGRAB, "NOTIFY_MODE_UNGRAB"),
+          std::make_pair(XCB_NOTIFY_MODE_WHILE_GRABBED, "NOTIFY_MODE_WHILE_GRABBED"),
         };
 
-        return get_enum(os, a, types);
+        return os << support::ostream::enumerate(a, types);
       }
       
       std::ostream&
@@ -626,11 +636,12 @@ namespace hugh {
       std::ostream&
       operator<<(std::ostream& os, ::xcb_property_t const& a)
       {
-        static std::array<std::string const, 2> const types = {
-          { "PROPERTY_NEW_VALUE", "PROPERTY_DELETE", }
+        static std::array<std::pair<::xcb_property_t const, std::string const>, 2> const types = {
+          std::make_pair(XCB_PROPERTY_NEW_VALUE, "PROPERTY_NEW_VALUE"),
+          std::make_pair(XCB_PROPERTY_DELETE, "PROPERTY_DELETE"),
         };
         
-        return get_enum(os, a, types);
+        return os << support::ostream::enumerate(a, types);
       }
       
       std::ostream&
@@ -754,13 +765,13 @@ namespace hugh {
       std::ostream&
       operator<<(std::ostream& os, ::xcb_visibility_t const& a)
       {
-        static std::array<std::string const, 3> const types = {
-          { "VISIBILITY_UNOBSCURED",
-            "VISIBILITY_PARTIALLY_OBSCURED",
-            "VISIBILITY_FULLY_OBSCURED", }
+        static std::array<std::pair<::xcb_visibility_t const, std::string const>, 3> const types = {
+          std::make_pair(XCB_VISIBILITY_UNOBSCURED,         "VISIBILITY_UNOBSCURED"),
+          std::make_pair(XCB_VISIBILITY_PARTIALLY_OBSCURED, "VISIBILITY_PARTIALLY_OBSCURED"),
+          std::make_pair(XCB_VISIBILITY_FULLY_OBSCURED,     "VISIBILITY_FULLY_OBSCURED"),
         };
 
-        return get_enum(os, a, types);
+        return os << support::ostream::enumerate(a, types);
       }
       
     } // namespace xcb {

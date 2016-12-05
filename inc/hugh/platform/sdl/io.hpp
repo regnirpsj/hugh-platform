@@ -38,8 +38,9 @@ namespace hugh {
       // functions, inlined (inline)
   
       // functions, exported (extern)
-
+      
       HUGH_PLATFORM_EXPORT std::ostream& operator<<(std::ostream&, ::SDL_WindowEvent const&);
+      HUGH_PLATFORM_EXPORT std::ostream& operator<<(std::ostream&, ::SDL_WindowEventID const&);
 
     } // namespace sdl {
     

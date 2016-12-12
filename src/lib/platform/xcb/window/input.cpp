@@ -162,12 +162,16 @@ namespace hugh {
                   break;
                 }
               }
-              
+
+#if 0	      
               std::cout << hugh::support::trace::prefix()
                         << "hugh::platform::xcb::window::input::handle_xcb_event: "
                         << a
                         << '\n';
+#endif
+
             }
+
             break;
           }
           

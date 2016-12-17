@@ -44,6 +44,10 @@ namespace hugh {
 #if defined(__GNUC__)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wterminate"
+#elif defined(_MSC_VER)
+#  pragma warning(push)
+      // warning C4297: 'd'tor': function assumed not to throw an exception but does
+#  pragma warning(disable:4297)
 #endif
       
       template <typename C>
@@ -64,6 +68,8 @@ namespace hugh {
 
 #if defined(__GNUC__)
 #  pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+#  pragma warning(pop)
 #endif
       
       template <typename C>

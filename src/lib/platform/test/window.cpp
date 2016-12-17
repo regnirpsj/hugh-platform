@@ -82,9 +82,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_platform_window_fields, W, window_types)
   BOOST_CHECK(w);
 
   {
-    std::string const t(hugh::support::demangle(typeid(W)));
+    std::string const t1(hugh::support::demangle(typeid(W)));
     
-    w->title.set(t);
+    w->title.set(t1);
     
     BOOST_CHECK(t == *w->title);
   }

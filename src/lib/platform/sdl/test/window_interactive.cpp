@@ -22,7 +22,7 @@
 #include <hugh/platform/sdl/window.hpp>
 
 #define HUGH_USE_TRACE
-//#undef HUGH_USE_TRACE
+#undef HUGH_USE_TRACE
 #include <hugh/support/trace.hpp>
 
 // internal unnamed namespace
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(test_hugh_platform_sdl_window_interactive)
 {
   window w("test_platform_sdl_window_interactive",
            std::chrono::milliseconds(900),
-           window::rect(10, 10, 800, 600));
+           window::rect(50, 50, 800, 600));
   
   w.display();
   

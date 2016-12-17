@@ -41,8 +41,7 @@ namespace {
 
   // variables, internal
 
-  std::string const env_dpy_name (::getenv("DISPLAY"));
-  std::string const dflt_dpy_name(":0");
+  std::string const display_name(::getenv("DISPLAY") ? ::getenv("DISPLAY") : ":0");
   
   // functions, internal
 
@@ -58,9 +57,7 @@ namespace hugh {
         
         // variables, exported
 
-        /* static */ std::string const context::dflt_display_name((!env_dpy_name.empty()) ?
-                                                                  env_dpy_name :
-                                                                  dflt_dpy_name);
+        /* static */ std::string const context::dflt_display_name(display_name);
         
         // functions, exported
 

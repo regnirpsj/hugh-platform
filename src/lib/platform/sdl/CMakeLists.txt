@@ -6,9 +6,7 @@
 #                                                                                                  #
 ####################################################################################################
 
-find_package(PkgConfig)
-
-pkg_check_modules(SDL sdl2)
+find_package(SDL ${SDL_MINIMUM_VERSION})
 
 if(NOT SDL_FOUND)
   message(WARNING "Optional SDL support not enabled")
@@ -21,7 +19,7 @@ find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED)
 find_package(HUGH                           REQUIRED COMPONENTS support)
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
-include_directories(SYSTEM ${SDL_INCLUDE_DIRS})
+include_directories(SYSTEM ${SDL_INCLUDE_DIR})
 include_directories(SYSTEM ${HUGH_INCLUDE_DIRS})
 
 set(SRC)
@@ -37,7 +35,7 @@ set(LIBS)
 list(APPEND LIBS hugh_platform_posix)
 list(APPEND LIBS hugh_platform)
 list(APPEND LIBS ${HUGH_LIBRARIES})
-list(APPEND LIBS ${SDL_LIBRARIES})
+list(APPEND LIBS ${SDL_LIBRARY})
 
 set(LIB ${LIB}_sdl)
 

@@ -40,10 +40,15 @@ namespace hugh {
     namespace window {
 
       // functions, inlined (inline)
-  
+
+#if defined(__GNUC__)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wterminate"
+#endif
+      
       template <typename C>
       inline /* virtual */
-      base<C>::~base() noexcept(false)
+      base<C>::~base()
       {
         TRACE("hugh::platform::window::base<" + support::demangle(typeid(C)) + ">::~base");
 
@@ -56,6 +61,10 @@ namespace hugh {
           }
         }
       }
+
+#if defined(__GNUC__)
+#  pragma GCC diagnostic pop
+#endif
       
       template <typename C>
       inline /* virtual */ void

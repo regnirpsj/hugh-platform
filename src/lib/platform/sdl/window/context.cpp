@@ -62,7 +62,7 @@ namespace hugh {
         // functions, exported
 
         /* explicit */
-        context::context(std::string const& a, rect const& b, std::string const& c)
+        context::context(std::string const& a, rect const& b, std::string const&)
           : support::printable(),
             title_            (a),
             position_         (glm::uvec2((0 > b.x) ? 0 : b.x,

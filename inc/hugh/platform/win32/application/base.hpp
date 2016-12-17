@@ -18,7 +18,7 @@
 
 // includes, system
 
-//#include <>
+#include <windows.h> // win32 stuff
 
 // includes, project
 
@@ -46,9 +46,21 @@ namespace hugh {
       
         protected:
 
+          enum class message { get, peek, };
+          
           explicit base(command_line const& /* argc/argv            */,
                         bool                /* positionals as files */ = positionals);
-        
+
+          signed message_loop(message /* message-lookup type */);
+
+          virtual void update();
+
+        private:
+          
+          void get_message     ();
+          void peek_message    ();
+          void dispatch_message(MSG const&);
+          
         };
       
         // variables, exported (extern)

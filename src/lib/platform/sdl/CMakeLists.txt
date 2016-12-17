@@ -23,8 +23,11 @@ include_directories(SYSTEM ${SDL_INCLUDE_DIR})
 include_directories(SYSTEM ${HUGH_INCLUDE_DIRS})
 
 set(SRC)
-list(APPEND SRC application/base.cpp)
+
 list(APPEND SRC io.cpp)
+
+list(APPEND SRC application/base.cpp)
+
 list(APPEND SRC window/context.cpp)
 list(APPEND SRC window/input.cpp)
 list(APPEND SRC window/update.cpp)

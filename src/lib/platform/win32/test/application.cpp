@@ -14,11 +14,13 @@
 
 // includes, system
 
+#include <memory>  // std::unique_ptr<>
 #include <sstream> // std::ostringstream
 
 // includes, project
 
 #include <hugh/platform/win32/application/base.hpp>
+#include <hugh/platform/win32/window.hpp>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
@@ -44,22 +46,54 @@ namespace {
 
 BOOST_AUTO_TEST_CASE(test_hugh_platform_win32_application_execute)
 {
-  namespace hpa = hugh::platform::application;
-  namespace hppa = hugh::platform::win32::application;
-  
+  namespace hpa  = hugh::platform::application;
+  namespace hpw  = hugh::platform::window;
+  namespace hpwa = hugh::platform::win32::application;
+  namespace hpww = hugh::platform::win32::window;
+    
   using hpa::command_line;
 
-  class app : public hppa::base {
+  class app : public hpwa::base {
 
-    using inherited = hppa::base;
+    using inherited = hpwa::base;
     
   public:
 
+    using time_point = hugh::support::clock::time_point;
+
     explicit app(command_line const& a)
-      : inherited(a) {}
+      : inherited(a),
+        window_  (nullptr),
+        start_   (hugh::support::clock::now())
+    {
+      TRACE("app::app");
+    }
 
-    virtual signed run() { return EXIT_SUCCESS; }
+    virtual signed run()
+    {
+      TRACE("app::run");
+      
+      window_.reset(new hpww::simple("", hpw::rect::dflt_rect, ""));
 
+      return message_loop(message::peek);
+    }
+
+    virtual void update()
+    {
+      TRACE("app::update");
+      
+      if (std::chrono::milliseconds(10) < (hugh::support::clock::now() - start_)) {
+        terminate = true;
+      }
+
+      window_->display();
+    }
+    
+  private:
+
+    std::unique_ptr<hpww::simple> window_;
+    time_point const              start_;
+    
   };
 
   using hpa::execute;
@@ -70,20 +104,20 @@ BOOST_AUTO_TEST_CASE(test_hugh_platform_win32_application_execute)
 BOOST_AUTO_TEST_CASE(test_hugh_platform_application_print)
 {
   namespace hpa = hugh::platform::application;
-  namespace hppa = hugh::platform::win32::application;
+  namespace hpwa = hugh::platform::win32::application;
   
   using hpa::command_line;
 
-  class app : public hppa::base {
+  class app : public hpwa::base {
 
-    using inherited = hppa::base;
+    using inherited = hpwa::base;
     
   public:
 
     explicit app(command_line const& a)
-      : inherited(a) {}
+      : inherited(a) { TRACE("app::app"); }
 
-    virtual signed run() { return EXIT_SUCCESS; }
+    virtual signed run() { TRACE("app::run"); return EXIT_SUCCESS; }
 
   } instance(command_line(argc, argv));
 

@@ -58,7 +58,7 @@ namespace {
       while (duration_ > (hugh::support::clock::now() - start_)) {
         inherited::display();
 
-        hugh::support::sleep(std::chrono::milliseconds(250));
+        hugh::support::sleep(std::chrono::milliseconds(100));
       }
     }
 
@@ -80,7 +80,7 @@ namespace {
 
 BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_simple)
 {
-  window w("test_platform_xcb_window_simple",
+  window w("test_hugh_platform_xcb_window_simple",
            std::chrono::milliseconds(900),
            window::rect(10, 10, 800, 600));
   

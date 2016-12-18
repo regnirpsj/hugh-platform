@@ -79,7 +79,7 @@ namespace {
 
 BOOST_AUTO_TEST_CASE(test_hugh_platform_xcb_window_interactive)
 {
-  window w("test_platform_xcb_window_interactive",
+  window w("test_hugh_platform_xcb_window_interactive",
            std::chrono::milliseconds(900),
            window::rect(10, 10, 800, 600));
   

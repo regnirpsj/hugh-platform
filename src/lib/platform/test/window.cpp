@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(test_hugh_platform_window_fields, W, window_types)
     
     w->title.set(t1);
     
-    BOOST_CHECK(t == *w->title);
+    BOOST_CHECK(t1 == *w->title);
   }
 
   {

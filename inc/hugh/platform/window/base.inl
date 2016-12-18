@@ -41,9 +41,12 @@ namespace hugh {
 
       // functions, inlined (inline)
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) && !defined(__clang__)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wterminate"
+      //#elif defined(__clang__)
+      //#  pragma clang diagnostic push
+      //#  pragma clang diagnostic ignored "-Wterminate"
 #elif defined(_MSC_VER)
 #  pragma warning(push)
       // warning C4297: 'd'tor': function assumed not to throw an exception but does
@@ -66,8 +69,10 @@ namespace hugh {
         }
       }
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) && !defined(__clang__)
 #  pragma GCC diagnostic pop
+      //#elif defined(__clang__)
+      //#  pragma clang diagnostic pop
 #elif defined(_MSC_VER)
 #  pragma warning(pop)
 #endif

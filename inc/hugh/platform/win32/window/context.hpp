@@ -18,9 +18,10 @@
 
 // includes, system
 
-#include <glm/glm.hpp> // glm::*
-#include <string>      // std::string
-#include <windows.h>   // win32 stuff
+#include <boost/noncopyable.hpp> // boost::noncopyable
+#include <glm/glm.hpp>           // glm::*
+#include <string>                // std::string
+#include <windows.h>              // win32 stuff
 
 // includes, project
 
@@ -54,6 +55,8 @@ namespace hugh {
                            std::string const& /* display */ = dflt_display_name);
           virtual ~context();
 
+          HWND const& handle() const;
+          
           virtual void print_on(std::ostream&) const;
                   
           glm::uvec2 const&  position() const;
@@ -71,8 +74,33 @@ namespace hugh {
           std::string title_;
           glm::uvec2  position_;
           glm::uvec2  size_;
-          HWND        window_;
+          HWND        hwnd_;
+
+          virtual LRESULT CALLBACK cb_window_proc(HWND, UINT, WPARAM, LPARAM);
           
+        private:
+
+          class register_class : private boost::noncopyable {
+
+          public:
+
+            static std::string const class_name;
+
+            explicit register_class();
+                    ~register_class();
+
+            static unsigned count();
+
+          private:
+
+            static unsigned count_;
+
+          };
+
+          register_class const register_class_;
+
+          static LRESULT CALLBACK cb_window_proc_default(HWND, UINT, WPARAM, LPARAM);
+        
         };
         
         // variables, exported (extern)

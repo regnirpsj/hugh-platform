@@ -2,7 +2,7 @@
 
 /**************************************************************************************************/
 /*                                                                                                */
-/* Copyright (C) 2016 University of Hull                                                          */
+/* Copyright (C) 2016-2017 University of Hull                                                     */
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
@@ -19,11 +19,10 @@
 // includes, system
 
 #include <algorithm> // std::find<>
-//#include <ostream>   // std::ostream
 
 // includes, project
 
-#include <hugh/support/io_utils.hpp>
+#include <hugh/support/io.hpp>
 
 #define HUGH_USE_TRACE
 #undef HUGH_USE_TRACE
